@@ -16,6 +16,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@walkme/sdk": "^1.0.24-1",
+    "classcat": "^4.1.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
     "prettier": "^2.0.5",
@@ -25,7 +27,14 @@
     "typescript": "~3.7.2"
   },
   "eslintConfig": {
-    "extends": ["react-app"]
+    "extends": [
+      "react-app"
+    ]
+  },
+  "prettier": {
+    "printWidth": 120,
+    "singleQuote": true,
+    "bracketSpacing": true
   },
   "husky": {
     "hooks": {

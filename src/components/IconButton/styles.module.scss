@@ -1,0 +1,14 @@
+.icon-button {
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--primary100);
+  }
+}
