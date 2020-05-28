@@ -2,16 +2,13 @@ import React from 'react';
 
 export default function FullscreenIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.2 19.4" width="24" height="24">
-      <defs />
-      <g stroke="currentColor">
-        <path d="M13 6.9l5.2-5.1" />
-        <path d="M7.1 12.9l-5 5.1" />
-      </g>
-      <g fill="currentColor">
-        <path d="M11 1.8l7.2 7.3-7.2.1z" />
-        <path d="M9.3 10.7l-7.3.1L9.3 18z" />
-      </g>
+    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8.95 0L8.92 7.322L16.18 7.238L13.17 4.238L16.01 1.399L14.85 0.241L12.01 3.081L8.95 0ZM7.23 16.17L7.26 8.848L0 8.932L3.01 11.932L0.17 14.771L1.33 15.929L4.17 13.088L7.23 16.17Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }

@@ -4,6 +4,7 @@ import cc from 'classcat';
 import dots from '../../images/dots.svg';
 import IconButton from '../IconButton';
 import NotificationsIcon from '../icon-components/NotificationsIcon';
+import DotsIcon from '../icon-components/DotsIcon';
 import FullscreenIcon from '../icon-components/FullscreenIcon';
 import classes from './styles.module.scss';
 import SearchInput from '../SearchInput';
@@ -18,13 +19,13 @@ export default function Header() {
       <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} />
       </div>
-      <IconButton className={classes['icon-button']}>
+      <IconButton>
         <NotificationsIcon />
       </IconButton>
-      <IconButton className={classes['icon-button']}>
-        <img alt="menu" src={dots} width={24} height={16} />
+      <IconButton>
+        <DotsIcon />
       </IconButton>
-      <IconButton className={classes['icon-button']}>
+      <IconButton>
         <FullscreenIcon />
       </IconButton>
     </section>

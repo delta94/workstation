@@ -7,14 +7,16 @@ ul.tabs {
   border-top: 1px solid var(--border500);
   border-bottom: 1px solid var(--border500);
   list-style-type: none;
+  font-size: 16px;
 
-  .tab {
+  li.tab {
     height: 100%;
     line-height: 80px;
     display: inline-block;
     margin-right: 42px;
     cursor: pointer;
     color: var(--secondary500);
+    font-family: 'Poppins', sans-serif;
 
     &:last-child {
       margin-right: 0;
