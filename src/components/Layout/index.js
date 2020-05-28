@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Header from '../Header';
-import TabsLayout from '../TabsLayout';
+import TabsLayout from '../TabsBar';
+import HelpList from '../HelpList';
+
+import classes from './styles.module.scss';
+
+const contentTypeToComponentDictionary = {
+  help: HelpList,
+  tasks: () => <div>Tasks</div>,
+  microApp: () => <div>Micro App</div>,
+};
 
 function Layout() {
   const [activeSection, setActiveSection] = useState();
@@ -10,11 +19,11 @@ function Layout() {
     <>
       <Header onClick={setActiveSection} />
       <TabsLayout onClick={setActiveSection} />
-      <div style={{ whiteSpace: 'pre' }}>
+      <section className={classes.content} style={{ whiteSpace: 'pre' }}>
         The active thing
         <br />
         {JSON.stringify(activeSection, null, 2)}
-      </div>
+      </section>
     </>
   );
 }

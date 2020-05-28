@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import classes from './styles.module.scss';
 
-export default function HelpTab({ childNodes }) {
+export default function HelpList({ childNodes }) {
   return (
-    <ul className={classes['help-tabs']}>
+    <ul className={classes['help-list']}>
       {childNodes.map((node) => (
         <li className={classes['help-item']} key={node.id}>
           <span className={classes.title}>{node.title}</span>

@@ -1,10 +1,17 @@
 import React from 'react';
+import cc from 'classcat';
 
 import classes from './styles.module.scss';
 
-export default function Logo() {
+export default function Logo({ className }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="57" height="47" viewBox="0 0 57 46.031" className={classes.logo}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="57"
+      height="47"
+      viewBox="0 0 57 46.031"
+      className={cc([classes.logo, className])}
+    >
       <defs />
       <path
         fill="#348bd8"

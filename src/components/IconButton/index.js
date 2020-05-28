@@ -1,7 +1,7 @@
 import React from 'react';
-
+import cc from 'classcat';
 import classes from './styles.module.scss';
 
-export default function IconButton({ children }) {
-  return <div className={classes['icon-button']}>{children}</div>;
+export default function IconButton({ children, className = '' }) {
+  return <div className={cc([classes['icon-button'], className])}>{children}</div>;
 }

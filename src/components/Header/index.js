@@ -13,20 +13,20 @@ export default function Header() {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
 
   return (
-    <div className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
-      <Logo />
-      <div style={{ marginLeft: 36 }}>
+    <section className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
+      <Logo className={classes.logo} />
+      <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} />
       </div>
-      <IconButton>
+      <IconButton className={classes['icon-button']}>
         <NotificationsIcon />
       </IconButton>
-      <IconButton>
-        <img src={dots} width={24} height={16} />
+      <IconButton className={classes['icon-button']}>
+        <img alt="menu" src={dots} width={24} height={16} />
       </IconButton>
-      <IconButton>
+      <IconButton className={classes['icon-button']}>
         <FullscreenIcon />
       </IconButton>
-    </div>
+    </section>
   );
 }

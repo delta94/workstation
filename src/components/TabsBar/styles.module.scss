@@ -1,0 +1,73 @@
+ul.tabs {
+  width: 100%;
+  height: 80px;
+  margin: 0;
+  padding: 0 30px;
+  background-color: var(--secondary100);
+  border-top: 1px solid var(--border500);
+  border-bottom: 1px solid var(--border500);
+  list-style-type: none;
+
+  .tab {
+    height: 100%;
+    line-height: 80px;
+    display: inline-block;
+    margin-right: 42px;
+    cursor: pointer;
+    color: var(--secondary500);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.tab-content {
+  overflow: auto;
+  height: calc(100vh - 90px - 82px);
+
+  .help-tabs {
+    list-style-type: none;
+    margin: 30px 0;
+    padding: 0;
+  }
+
+  .help-item {
+    height: 75px;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 0;
+    padding: 16px 30px;
+    cursor: pointer;
+
+    span {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .title {
+      color: var(--neutral900);
+      font-weight: 500;
+      font-size: 15px;
+      vertical-align: bottom;
+    }
+
+    .description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--neutral500);
+    }
+
+    .url {
+      color: var(--secondary500);
+      font-weight: 100;
+      font-size: 13px;
+    }
+
+    &:hover {
+      background-color: var(--secondary100);
+    }
+  }
+}
