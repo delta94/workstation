@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
-import mockTabs from './tabs-mock';
+import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
+
 import classes from './styles.module.scss';
 
 export default function TabsBar({ onClick }) {
-  const [tabs, setTabs] = useState(mockTabs);
+  const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   function onClickTab(tab) {
     setActiveTab(tab);
-    onClick(tab);
+    onClick({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
   }
 
   return (

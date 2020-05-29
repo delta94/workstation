@@ -14,7 +14,7 @@ export default function SearchInput({ onFocusChange }) {
   return (
     <div className={cc([classes.search, { [classes.focus]: isSearchFocus }])}>
       <input
-        type="search"
+        type="text"
         placeholder="Search"
         onFocus={() => onChangeSearchFocus(true)}
         onBlur={() => onChangeSearchFocus(false)}

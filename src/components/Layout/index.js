@@ -10,19 +10,19 @@ const contentTypeToComponentDictionary = {
   help: HelpList,
   tasks: () => <div>Tasks</div>,
   microApp: () => <div>Micro App</div>,
+  undefined: () => <div>NO RENDERER OR CONTENT</div>,
 };
 
 function Layout() {
-  const [activeSection, setActiveSection] = useState();
+  const [activeSection, setActiveSection] = useState({ contentType: undefined, content: undefined });
 
+  const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
   return (
     <>
       <Header onClick={setActiveSection} />
       <TabsLayout onClick={setActiveSection} />
       <section className={classes.content} style={{ whiteSpace: 'pre' }}>
-        The active thing
-        <br />
-        {JSON.stringify(activeSection, null, 2)}
+        <ContentComponent content={activeSection.content} />
       </section>
     </>
   );
