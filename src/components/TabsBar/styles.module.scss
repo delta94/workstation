@@ -8,18 +8,34 @@ ul.tabs {
   border-bottom: 1px solid var(--border500);
   list-style-type: none;
   font-size: 16px;
+  display: flex;
 
   li.tab {
     height: 100%;
     line-height: 80px;
-    display: inline-block;
-    margin-right: 42px;
+    margin-right: 56px;
     cursor: pointer;
     color: var(--secondary500);
     font-family: 'Poppins', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    transition: all 250ms ease;
 
     &:last-child {
       margin-right: 0;
+    }
+
+    &.active {
+      color: var(--primary);
+    }
+
+    &:hover {
+      margin-top: -2px;
+      color: var(--primary);
+    }
+
+    svg {
+      margin-right: 11px;
     }
   }
 }
