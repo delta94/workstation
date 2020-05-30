@@ -3,12 +3,13 @@ import React, { useState } from 'react';
 import Header from '../Header';
 import TabsLayout from '../TabsBar';
 import HelpList from '../HelpList';
+import TaskList from '../TaskList';
 
 import classes from './styles.module.scss';
 
 const contentTypeToComponentDictionary = {
   help: HelpList,
-  tasks: () => <div>Tasks</div>,
+  tasks: TaskList,
   microApp: () => <div>Micro App</div>,
   undefined: () => <div>NO RENDERER OR CONTENT</div>,
 };
