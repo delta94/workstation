@@ -3,19 +3,19 @@ import cc from 'classcat';
 
 import classes from './styles.module.scss';
 
-export default function TaskItem({ task }) {
+export default function TaskItem({ node }) {
   return (
     <li
       className={cc([
         classes['task-item'],
         {
-          [classes['is-completed']]: task.properties.isCompleted,
-          [classes['is-crossed-off']]: task.properties.isCrossedOff,
-          [classes['is-disabled']]: task.properties.isDisabled,
+          [classes['is-completed']]: node.properties.isCompleted,
+          [classes['is-crossed-off']]: node.properties.isCrossedOff,
+          [classes['is-disabled']]: node.properties.isDisabled,
         },
       ])}
     >
-      <span className={classes.title}>{task.title}</span>
+      <span className={classes.title}>{node.title}</span>
     </li>
   );
 }
