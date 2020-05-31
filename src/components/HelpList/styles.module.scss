@@ -55,4 +55,43 @@
       background-color: var(--secondary100);
     }
   }
+
+  .help-group {
+    border-top: solid 1px var(--border100);
+
+    &.last-of-type {
+      border-bottom: solid 1px var(--border100);
+    }
+
+    .help-group-title {
+      font-size: 16px;
+      font-family: var(--font-primary);
+      font-weight: 500;
+      padding: 20px 30px;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--primary);
+        background-color: var(--secondary100);
+
+        .help-list-icon {
+          color: var(--primary);
+        }
+      }
+
+      .help-list-icon {
+        display: inline-block;
+        margin-right: 17px;
+        color: var(--secondary500);
+      }
+    }
+
+    ul {
+      padding-left: 0;
+
+      li {
+        padding-left: 50px;
+      }
+    }
+  }
 }
