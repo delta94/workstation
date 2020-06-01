@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import walkme from '@walkme/sdk';
 import cc from 'classcat';
 
-import { ReactComponent as LanguagesIcon } from './languages.svg';
-import { ReactComponent as LogOutIcon } from './log-out.svg';
-import { ReactComponent as ReloadIcon } from './reload.svg';
-import { ReactComponent as CollapseArrowIcon } from './collapseArrow.svg';
+import { ReactComponent as LanguagesIcon } from './icons/languages.svg';
+import { ReactComponent as LogOutIcon } from './icons/log-out.svg';
+import { ReactComponent as ReloadIcon } from './icons/reload.svg';
+import { ReactComponent as CollapseArrowIcon } from './icons/collapseArrow.svg';
 
 import classes from './styles.module.scss';
 import SmoothCollapse from 'react-smooth-collapse';
@@ -14,6 +14,7 @@ export default function HeaderMenu({ className = '' }) {
   const isLoggedIn = true;
 
   const [isOpen, setIsOpen] = useState(true);
+  const languages = useMemo(() => walkme.language.languages);
 
   function toggleDropDown() {
     setIsOpen(!isOpen);
@@ -41,12 +42,15 @@ export default function HeaderMenu({ className = '' }) {
         </div>
         <SmoothCollapse expanded={isOpen}>
           <ul className={classes['inner-menu']}>
-            <li className={classes.title} onClick={() => selectLanguage('')}>
-              Default
-            </li>
-            <li className={classes.title} onClick={() => selectLanguage('es-es')}>
-              Spanish
-            </li>
+            {languages.map((language) => (
+              <li
+                className={classes.title}
+                key={language.shortName ?? 'default'}
+                onClick={() => selectLanguage(language.shortName)}
+              >
+                {language.displayName}
+              </li>
+            ))}
           </ul>
         </SmoothCollapse>
       </li>
