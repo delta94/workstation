@@ -14,7 +14,7 @@ const iconsToTabsDictionary = {
   'ongoing-tasks': OngoingTasks,
 };
 
-export default function TabsBar({ onClick }) {
+export default function TabsBar({ onSelectSection }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
@@ -22,7 +22,7 @@ export default function TabsBar({ onClick }) {
 
   function onClickTab(tab, index) {
     setActiveTab(tab);
-    onClick({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
+    onSelectSection({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
 
     const { width, left } = tabRefs.current[index].getBoundingClientRect();
     setUnderlineSize({ width, left });

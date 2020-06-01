@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
 import Header from '../Header';
-import TabsLayout from '../TabsBar';
+import TabsBar from '../TabsBar';
 import HelpList from '../HelpList';
 import TaskList from '../TaskList';
+import NotificationList from '../NotificationList';
 
 import classes from './styles.module.scss';
 
 const contentTypeToComponentDictionary = {
   help: HelpList,
   tasks: TaskList,
+  notifications: NotificationList,
   microApp: () => <div>Micro App</div>,
   undefined: () => <div>NO RENDERER OR CONTENT</div>,
 };
@@ -20,8 +22,8 @@ function Layout() {
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
   return (
     <>
-      <Header onClick={setActiveSection} />
-      <TabsLayout onClick={setActiveSection} />
+      <Header onSelectSection={setActiveSection} />
+      <TabsBar onSelectSection={setActiveSection} />
       <section className={classes.content} style={{ whiteSpace: 'pre' }}>
         <ContentComponent content={activeSection.content} />
       </section>
