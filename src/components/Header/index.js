@@ -9,9 +9,11 @@ import FullscreenIcon from '../icon-components/FullscreenIcon';
 import classes from './styles.module.scss';
 import SearchInput from '../SearchInput';
 import Logo from '../Logo';
+import HeaderMenu from '../HeaderMenu';
 
 export default function Header() {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function onMinimizeClick() {
     walkme.platform.closeMe();
@@ -26,9 +28,13 @@ export default function Header() {
       <IconButton>
         <NotificationsIcon />
       </IconButton>
-      <IconButton>
-        <DotsIcon />
-      </IconButton>
+      <div className={classes['menu-container']}>
+        <IconButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <DotsIcon />
+        </IconButton>
+        <HeaderMenu isOpen={isMenuOpen} className={cc([classes['header-menu'], { [classes.show]: isMenuOpen }])} />
+      </div>
+
       <IconButton onClick={onMinimizeClick}>
         <FullscreenIcon />
       </IconButton>

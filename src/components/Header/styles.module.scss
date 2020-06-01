@@ -34,4 +34,25 @@
       margin-left: 0;
     }
   }
+
+  .menu-container {
+    position: relative;
+  }
+
+  .header-menu {
+    position: absolute;
+    right: 2px;
+    top: 18px;
+    z-index: 1;
+
+    opacity: 0;
+    transition: all 200ms ease;
+    pointer-events: none;
+
+    &.show {
+      opacity: 1;
+      top: 40px;
+      pointer-events: auto;
+    }
+  }
 }
