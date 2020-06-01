@@ -1,6 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import walkme from '@walkme/sdk';
 import cc from 'classcat';
+import SmoothCollapse from 'react-smooth-collapse';
+
+import useClickOutside from '../../hooks/useClickOutside';
 
 import { ReactComponent as LanguagesIcon } from './icons/languages.svg';
 import { ReactComponent as LogOutIcon } from './icons/log-out.svg';
@@ -8,15 +11,16 @@ import { ReactComponent as ReloadIcon } from './icons/reload.svg';
 import { ReactComponent as CollapseArrowIcon } from './icons/collapseArrow.svg';
 
 import classes from './styles.module.scss';
-import SmoothCollapse from 'react-smooth-collapse';
 
-export default function HeaderMenu({ className = '' }) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function HeaderMenu({ setIsOpen, className = '' }) {
+  const [isLanguagesExpanded, setIsLanguagesExpanded] = useState(true);
   const languages = useMemo(() => walkme.language.languages);
   const showLogout = useMemo(() => walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP);
+  const menuRef = useRef(null);
+  useClickOutside(menuRef, () => setIsOpen(false));
 
   function toggleDropDown() {
-    setIsOpen(!isOpen);
+    setIsLanguagesExpanded(!isLanguagesExpanded);
   }
 
   async function selectLanguage(language) {
@@ -32,14 +36,16 @@ export default function HeaderMenu({ className = '' }) {
   }
 
   return (
-    <ul className={cc([classes['header-menu'], className])}>
+    <ul ref={menuRef} className={cc([classes['header-menu'], className])}>
       <li>
         <div className={cc([classes.title, classes['collapse-title']])} onClick={toggleDropDown}>
           <LanguagesIcon />
           Languages
-          <CollapseArrowIcon className={cc([classes['collapse-icon'], { [classes['is-open']]: isOpen }])} />
+          <CollapseArrowIcon
+            className={cc([classes['collapse-icon'], { [classes['is-open']]: isLanguagesExpanded }])}
+          />
         </div>
-        <SmoothCollapse expanded={isOpen}>
+        <SmoothCollapse expanded={isLanguagesExpanded}>
           <ul className={classes['inner-menu']}>
             {languages.map((language) => (
               <li

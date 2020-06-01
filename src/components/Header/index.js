@@ -32,7 +32,10 @@ export default function Header() {
         <IconButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <DotsIcon />
         </IconButton>
-        <HeaderMenu isOpen={isMenuOpen} className={cc([classes['header-menu'], { [classes.show]: isMenuOpen }])} />
+        <HeaderMenu
+          setIsOpen={setIsMenuOpen}
+          className={cc([classes['header-menu'], { [classes.show]: isMenuOpen }])}
+        />
       </div>
 
       <IconButton onClick={onMinimizeClick}>
