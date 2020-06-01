@@ -8,9 +8,13 @@
   position: relative;
   cursor: pointer;
   border-radius: 50%;
+  border: none;
+  color: var(--secondary500);
+  background-color: transparent;
+  outline: none;
 
   .growing-circle {
-    background: var(--primary100);
+    background-color: var(--primary100);
     transition: all 200ms ease;
     border-radius: 50%;
     width: 0;

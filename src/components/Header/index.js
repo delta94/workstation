@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import walkme from '@walkme/sdk';
 import cc from 'classcat';
 
-import dots from '../../images/dots.svg';
 import IconButton from '../IconButton';
 import NotificationsIcon from '../icon-components/NotificationsIcon';
 import DotsIcon from '../icon-components/DotsIcon';
@@ -12,6 +12,10 @@ import Logo from '../Logo';
 
 export default function Header() {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
+
+  function onMinimizeClick() {
+    walkme.platform.closeMe();
+  }
 
   return (
     <section className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
@@ -25,7 +29,7 @@ export default function Header() {
       <IconButton>
         <DotsIcon />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={onMinimizeClick}>
         <FullscreenIcon />
       </IconButton>
     </section>
