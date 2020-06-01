@@ -14,7 +14,7 @@ const iconsToTabsDictionary = {
   'ongoing-tasks': OngoingTasks,
 };
 
-export default function TabsBar({ onSelectSection }) {
+export default function TabsBar({ onSelectSection, isActive }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
@@ -27,6 +27,12 @@ export default function TabsBar({ onSelectSection }) {
     const { width, left } = tabRefs.current[index].getBoundingClientRect();
     setUnderlineSize({ width, left });
   }
+
+  useEffect(() => {
+    if (!isActive) {
+      setUnderlineSize({ width: 0, left: 0 });
+    }
+  }, [isActive]);
 
   return (
     <section className={classes.tabs}>

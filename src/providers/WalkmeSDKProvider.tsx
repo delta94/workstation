@@ -7,6 +7,7 @@ type WalkmeSdkContextTypes = {
   wmNotifications: object;
   notifications: object;
   uiTreeSDK: object;
+  tabTypes: object;
   languagesSDK: object;
 };
 
@@ -28,8 +29,17 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
           walkme.language.getLanguagesList(),
         ]);
         const notifications = await wmNotifications.getNotifications();
+        const tabTypes = (walkme.content as any).TabTypes;
+
         setLoading(false);
-        setSdk({ wmSearch, wmNotifications, notifications, uiTreeSDK, languagesSDK });
+        setSdk({
+          wmSearch,
+          wmNotifications,
+          notifications,
+          uiTreeSDK,
+          tabTypes,
+          languagesSDK,
+        });
       } catch (error) {
         setLoading(false);
         setError(true);
