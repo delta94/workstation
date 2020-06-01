@@ -11,10 +11,9 @@ import classes from './styles.module.scss';
 import SmoothCollapse from 'react-smooth-collapse';
 
 export default function HeaderMenu({ className = '' }) {
-  const isLoggedIn = true;
-
   const [isOpen, setIsOpen] = useState(true);
   const languages = useMemo(() => walkme.language.languages);
+  const showLogout = useMemo(() => walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP);
 
   function toggleDropDown() {
     setIsOpen(!isOpen);
@@ -59,7 +58,7 @@ export default function HeaderMenu({ className = '' }) {
         <ReloadIcon />
         Refresh
       </li>
-      {isLoggedIn && (
+      {showLogout && (
         <li className={classes.title} onClick={logout}>
           <LogOutIcon />
           Logout
