@@ -64,12 +64,12 @@
       height: 5px;
       border-radius: 50%;
       background-color: var(--warning);
-      top: 6px;
+      top: 9px;
       right: 9px;
       transition: all 200ms ease;
     }
 
-    &:hover::after {
+    &:not(.is-active):hover::after {
       top: 0;
     }
   }

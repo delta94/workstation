@@ -50,7 +50,10 @@ export default function Header({ onSelectSection, onDeselectSection }) {
       <IconButton
         onClick={onToggleNotifications}
         toggleOn={isShowingNotifications}
-        className={cc([classes['notification-icon'], { [classes['has-notifications']]: hasNotifications }])}
+        className={cc([
+          classes['notification-icon'],
+          { [classes['has-notifications']]: hasNotifications, [classes['is-active']]: isShowingNotifications },
+        ])}
       >
         <NotificationsIcon />
       </IconButton>
