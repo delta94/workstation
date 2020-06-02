@@ -40,11 +40,11 @@ export default function TabsBar({ onSelectSection, isActive }) {
         {tabs.map((tab, index) => {
           const tabIconName = tab.title.toLowerCase().replace(' ', '-');
           const TabIcon = iconsToTabsDictionary[tabIconName];
-          const isActive = tab === activeTab;
+          const isTabActive = tab === activeTab;
 
           return (
             <li
-              className={cc([classes.tab, { [classes.active]: isActive }])}
+              className={cc([classes.tab, { [classes.active]: isActive && isTabActive }])}
               key={tab.id}
               title={tab.description}
               onClick={() => onClickTab(tab, index)}
