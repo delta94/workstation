@@ -23,14 +23,27 @@
     z-index: 0;
   }
 
-  > *:nth-child(2) {
+  .icon {
     z-index: 1;
+    display: flex;
   }
 
   &:hover {
     .growing-circle {
       width: 100%;
       height: 100%;
+    }
+  }
+
+  &.toggle-on {
+    .growing-circle {
+      background-color: var(--primary);
+      width: 100%;
+      height: 100%;
+    }
+
+    .icon {
+      color: var(--white);
     }
   }
 }

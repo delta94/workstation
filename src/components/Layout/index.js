@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import Header from '../Header';
 import TabsBar from '../TabsBar';
@@ -22,11 +22,17 @@ function Layout() {
   const [activeSection, setActiveSection] = useState({ contentType: undefined, content: undefined });
   const tabsAreActive = Object.values(tabTypes).includes(activeSection.contentType);
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
+  const contentSection = useRef(null);
+
+  useEffect(() => {
+    contentSection.current.scrollTo(0, 0);
+  }, [activeSection]);
+
   return (
     <>
       <Header onSelectSection={setActiveSection} />
       <TabsBar onSelectSection={setActiveSection} isActive={tabsAreActive} />
-      <section className={classes.content} style={{ whiteSpace: 'pre' }}>
+      <section ref={contentSection} className={classes.content} style={{ whiteSpace: 'pre' }}>
         <ContentComponent content={activeSection.content} />
       </section>
     </>

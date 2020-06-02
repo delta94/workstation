@@ -19,9 +19,18 @@ export default function Header({ onSelectSection }) {
 
   const [isSearchFocus, setIsSearchFocus] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShowingNotifications, setIsShowingNotifications] = useState(false);
 
   function onMinimizeClick() {
     walkme.platform.closeMe();
+  }
+
+  function onToggleNotifications() {
+    if (!isShowingNotifications) {
+      onSelectSection({ contentType: 'notifications', content: notifications });
+    }
+
+    setIsShowingNotifications(!isShowingNotifications);
   }
 
   return (
@@ -30,7 +39,7 @@ export default function Header({ onSelectSection }) {
       <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} />
       </div>
-      <IconButton onClick={() => onSelectSection({ contentType: 'notifications', content: notifications })}>
+      <IconButton onClick={onToggleNotifications} toggleOn={isShowingNotifications}>
         <NotificationsIcon />
       </IconButton>
       <div className={classes['menu-container']}>

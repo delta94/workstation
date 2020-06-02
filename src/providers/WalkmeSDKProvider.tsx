@@ -47,6 +47,5 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     })();
   }, []);
 
-  debugger;
   return <WalkmeSDKContext.Provider value={sdk}>{sdk ? children : 'Loading'}</WalkmeSDKContext.Provider>;
 }
