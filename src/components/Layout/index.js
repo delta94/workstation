@@ -4,6 +4,7 @@ import Header from '../Header';
 import TabsBar from '../TabsBar';
 import HelpList from '../HelpList';
 import TaskList from '../TaskList';
+import SearchResults from '../SearchResults';
 import NotificationList from '../NotificationList';
 
 import classes from './styles.module.scss';
@@ -14,7 +15,7 @@ const contentTypeToComponentDictionary = {
   tasks: TaskList,
   notifications: NotificationList,
   microApp: () => <div>Micro App</div>,
-  undefined: () => <div>NO RENDERER OR CONTENT</div>,
+  undefined: () => <SearchResults searchTerm={'content'} />,
 };
 
 function Layout() {
