@@ -24,13 +24,17 @@ function Layout() {
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
   const contentSection = useRef(null);
 
+  function onDeselectSection() {
+    setActiveSection({ contentType: undefined, content: undefined });
+  }
+
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
   }, [activeSection]);
 
   return (
     <>
-      <Header onSelectSection={setActiveSection} />
+      <Header onSelectSection={setActiveSection} onDeselectSection={onDeselectSection} />
       <TabsBar onSelectSection={setActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content} style={{ whiteSpace: 'pre' }}>
         <ContentComponent content={activeSection.content} />

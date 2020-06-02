@@ -55,4 +55,22 @@
       pointer-events: auto;
     }
   }
+
+  .notification-icon.has-notifications {
+    &::after {
+      content: '';
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--warning);
+      top: 6px;
+      right: 9px;
+      transition: all 200ms ease;
+    }
+
+    &:hover::after {
+      top: 0;
+    }
+  }
 }

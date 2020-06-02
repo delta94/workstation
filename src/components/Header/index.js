@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import walkme from '@walkme/sdk';
 import cc from 'classcat';
 
@@ -14,12 +14,13 @@ import DotsIcon from '../icon-components/DotsIcon';
 import FullscreenIcon from '../icon-components/FullscreenIcon';
 import classes from './styles.module.scss';
 
-export default function Header({ onSelectSection }) {
+export default function Header({ onSelectSection, onDeselectSection }) {
   const { notifications } = useContext(WalkmeSDKContext);
+  const [hasNotifications, setHasNotifications] = useState(false);
+  const [isShowingNotifications, setIsShowingNotifications] = useState(false);
 
   const [isSearchFocus, setIsSearchFocus] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isShowingNotifications, setIsShowingNotifications] = useState(false);
 
   function onMinimizeClick() {
     walkme.platform.closeMe();
@@ -28,10 +29,17 @@ export default function Header({ onSelectSection }) {
   function onToggleNotifications() {
     if (!isShowingNotifications) {
       onSelectSection({ contentType: 'notifications', content: notifications });
+    } else {
+      onDeselectSection();
     }
 
     setIsShowingNotifications(!isShowingNotifications);
   }
+
+  useEffect(() => {
+    const hasNewNotifications = notifications.some((notification) => !notification.properties.isPlayed);
+    setHasNotifications(hasNewNotifications);
+  }, [notifications]);
 
   return (
     <section className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
@@ -39,7 +47,11 @@ export default function Header({ onSelectSection }) {
       <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} />
       </div>
-      <IconButton onClick={onToggleNotifications} toggleOn={isShowingNotifications}>
+      <IconButton
+        onClick={onToggleNotifications}
+        toggleOn={isShowingNotifications}
+        className={cc([classes['notification-icon'], { [classes['has-notifications']]: hasNotifications }])}
+      >
         <NotificationsIcon />
       </IconButton>
       <div className={classes['menu-container']}>
