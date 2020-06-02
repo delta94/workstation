@@ -20,23 +20,38 @@ const contentTypeToComponentDictionary = {
 function Layout() {
   const { tabTypes } = useContext(WalkmeSDKContext);
   const [activeSection, setActiveSection] = useState({ contentType: undefined, content: undefined });
-  const tabsAreActive = Object.values(tabTypes).includes(activeSection.contentType);
+  const [previousActiveSection, setPreviousActiveSection] = useState({ contentType: undefined, content: undefined });
+  const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
   const contentSection = useRef(null);
 
-  function onDeselectSection() {
-    setActiveSection({ contentType: undefined, content: undefined });
+  function onSetActiveSection(newActiveSection) {
+    setPreviousActiveSection(activeSection);
+    setActiveSection(newActiveSection);
+  }
+
+  function onDeselectActiveSection() {
+    setActiveSection(previousActiveSection);
+  }
+
+  function areTabsActive() {
+    return Object.values(tabTypes).includes(activeSection.contentType);
   }
 
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
+    setTabsAreActive(areTabsActive);
   }, [activeSection]);
 
   return (
     <>
-      <Header onSelectSection={setActiveSection} onDeselectSection={onDeselectSection} />
-      <TabsBar onSelectSection={setActiveSection} isActive={tabsAreActive} />
-      <section ref={contentSection} className={classes.content} style={{ whiteSpace: 'pre' }}>
+      <Header
+        onSelectSection={onSetActiveSection}
+        onDeselectSection={onDeselectActiveSection}
+        activeSection={activeSection}
+      />
+      <TabsBar onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
+      <section ref={contentSection} className={classes.content}>
         <ContentComponent content={activeSection.content} />
       </section>
     </>

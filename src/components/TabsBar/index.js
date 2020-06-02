@@ -20,17 +20,27 @@ export default function TabsBar({ onSelectSection, isActive }) {
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
 
+  function updateUnderlineSize(tabIndex) {
+    const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
+    setUnderlineSize({ width, left });
+  }
+
+  function clearUnderlineSize() {
+    setUnderlineSize({ width: 0, left: 0 });
+  }
+
   function onClickTab(tab, index) {
     setActiveTab(tab);
+    updateUnderlineSize(index);
     onSelectSection({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
-
-    const { width, left } = tabRefs.current[index].getBoundingClientRect();
-    setUnderlineSize({ width, left });
   }
 
   useEffect(() => {
     if (!isActive) {
-      setUnderlineSize({ width: 0, left: 0 });
+      clearUnderlineSize();
+    } else {
+      const tabIndex = tabs.findIndex(({ id }) => id === activeTab.id);
+      updateUnderlineSize(tabIndex);
     }
   }, [isActive]);
 

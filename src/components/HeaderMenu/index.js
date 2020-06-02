@@ -37,29 +37,33 @@ export default function HeaderMenu({ setIsOpen, className = '' }) {
 
   return (
     <ul ref={menuRef} className={cc([classes['header-menu'], className])}>
-      <li>
-        <div className={cc([classes.title, classes['collapse-title']])} onClick={toggleDropDown}>
-          <LanguagesIcon />
-          Languages
-          <CollapseArrowIcon
-            className={cc([classes['collapse-icon'], { [classes['is-open']]: isLanguagesExpanded }])}
-          />
-        </div>
-        <SmoothCollapse expanded={isLanguagesExpanded}>
-          <ul className={classes['inner-menu']}>
-            {languages.map((language) => (
-              <li
-                className={classes.title}
-                key={language.shortName ?? 'default'}
-                onClick={() => selectLanguage(language.shortName)}
-              >
-                {language.displayName}
-              </li>
-            ))}
-          </ul>
-        </SmoothCollapse>
-      </li>
-      <hr />
+      {languages.length > 1 && (
+        <>
+          <li>
+            <div className={cc([classes.title, classes['collapse-title']])} onClick={toggleDropDown}>
+              <LanguagesIcon />
+              Languages
+              <CollapseArrowIcon
+                className={cc([classes['collapse-icon'], { [classes['is-open']]: isLanguagesExpanded }])}
+              />
+            </div>
+            <SmoothCollapse expanded={isLanguagesExpanded}>
+              <ul className={classes['inner-menu']}>
+                {languages.map((language) => (
+                  <li
+                    className={classes.title}
+                    key={language.shortName ?? 'default'}
+                    onClick={() => selectLanguage(language.shortName)}
+                  >
+                    {language.displayName}
+                  </li>
+                ))}
+              </ul>
+            </SmoothCollapse>
+          </li>
+          <hr />
+        </>
+      )}
       <li className={classes.title} onClick={refresh}>
         <ReloadIcon />
         Refresh

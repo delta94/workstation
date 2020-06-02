@@ -14,7 +14,7 @@ import DotsIcon from '../icon-components/DotsIcon';
 import FullscreenIcon from '../icon-components/FullscreenIcon';
 import classes from './styles.module.scss';
 
-export default function Header({ onSelectSection, onDeselectSection }) {
+export default function Header({ onSelectSection, onDeselectSection, activeSection }) {
   const { notifications } = useContext(WalkmeSDKContext);
   const [hasNotifications, setHasNotifications] = useState(false);
   const [isShowingNotifications, setIsShowingNotifications] = useState(false);
@@ -40,6 +40,12 @@ export default function Header({ onSelectSection, onDeselectSection }) {
     const hasNewNotifications = notifications.some((notification) => !notification.properties.isPlayed);
     setHasNotifications(hasNewNotifications);
   }, [notifications]);
+
+  useEffect(() => {
+    if (activeSection?.contentType !== 'notifications') {
+      setIsShowingNotifications(false);
+    }
+  }, [activeSection]);
 
   return (
     <section className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
