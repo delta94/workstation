@@ -3,44 +3,6 @@
   margin: 30px 0;
   padding: 0;
 
-  .task-item {
-    width: 100%;
-    margin-left: 0;
-    padding: 12px 60px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: row;
-
-    background-image: url('../../images/taskRectangle.svg');
-    background-repeat: no-repeat;
-    background-position: 30px 50%;
-
-    &.is-completed {
-      background-image: url('../../images/taskDone.svg');
-    }
-
-    &.is-crossed-off {
-      text-decoration: line-through;
-    }
-
-    &.is-disabled {
-      color: var(--neutral500);
-    }
-
-    &:hover {
-      background-color: var(--secondary100);
-    }
-
-    &:hover:not(.is-disabled) {
-      color: var(--primary);
-    }
-
-    .title {
-      font-size: 14px;
-      vertical-align: center;
-    }
-  }
-
   .task-group {
     background-image: none;
 
@@ -98,5 +60,43 @@
         background-position: 50px 50%;
       }
     }
+  }
+}
+
+.task-item {
+  width: 100%;
+  margin-left: 0;
+  padding: 12px 60px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+
+  background-image: url('../../images/taskRectangle.svg');
+  background-repeat: no-repeat;
+  background-position: 30px 50%;
+
+  &.is-completed {
+    background-image: url('../../images/taskDone.svg');
+  }
+
+  &.is-crossed-off {
+    text-decoration: line-through;
+  }
+
+  &.is-disabled {
+    color: var(--neutral500);
+  }
+
+  &:hover {
+    background-color: var(--secondary100);
+  }
+
+  &:hover:not(.is-disabled) {
+    color: var(--primary);
+  }
+
+  .title {
+    font-size: 14px;
+    vertical-align: center;
   }
 }

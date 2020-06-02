@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
+import TaskItem from '../TaskList/TaskItem';
+import HelpItem from '../HelpList/HelpItem';
+
 import { findInSearchApi, findInUiTree } from './helpers';
+import SearchResultItem from './SearchResultItem';
 import classes from './styles.module.scss';
 
 export default function SearchResults({ searchTerm }) {
@@ -18,9 +22,14 @@ export default function SearchResults({ searchTerm }) {
   }, [searchTerm]);
 
   return (
-    <div className={classes['search-results']} style={{ whiteSpace: 'pre' }}>
-      <div>{JSON.stringify(uiTreeResults, null, 2)}</div>
-      <div>{JSON.stringify(apiSearchResults, null, 2)}</div>
+    <div className={classes['search-results']}>
+      {uiTreeResults?.map((node) => {
+        const Component = node.type === 'task' ? TaskItem : HelpItem;
+        return <Component node={node} key={node.id} />;
+      })}
+      {apiSearchResults?.map((node, index) => {
+        return <SearchResultItem node={node} key={index} />;
+      })}
     </div>
   );
 }
