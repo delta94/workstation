@@ -9,9 +9,9 @@ import SearchInput from '../SearchInput';
 import Logo from '../Logo';
 import HeaderMenu from '../HeaderMenu';
 
-import NotificationsIcon from '../icon-components/NotificationsIcon';
-import DotsIcon from '../icon-components/DotsIcon';
-import FullscreenIcon from '../icon-components/FullscreenIcon';
+import { ReactComponent as NotificationsIcon } from './icons/notifications.svg';
+import { ReactComponent as DotsIcon } from './icons/dots.svg';
+import { ReactComponent as FullscreenIcon } from './icons/fullscreen.svg';
 import classes from './styles.module.scss';
 
 export default function Header({ onSelectSection, onDeselectSection, activeSection }) {
