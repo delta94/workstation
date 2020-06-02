@@ -19,7 +19,7 @@
   }
 
   .search-input-wrapper {
-    margin: 0 10px 0 84px;
+    margin: 0 10px 0 calc(var(--logoWidth) + 27px);
     flex-grow: 1;
     transition: all 500ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
   }

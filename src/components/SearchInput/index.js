@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import cc from 'classcat';
 
+import { ReactComponent as SearchIcon } from './search.svg';
 import classes from './styles.module.scss';
 
 export default function SearchInput({ onFocusChange }) {
@@ -19,6 +20,7 @@ export default function SearchInput({ onFocusChange }) {
         onFocus={() => onChangeSearchFocus(true)}
         onBlur={() => onChangeSearchFocus(false)}
       />
+      <SearchIcon className={classes['search-icon']} />
     </div>
   );
 }
