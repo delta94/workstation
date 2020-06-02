@@ -56,6 +56,10 @@
     }
   }
 
+  .icon-button {
+    flex-shrink: 0;
+  }
+
   .notification-icon.has-notifications {
     &::after {
       content: '';

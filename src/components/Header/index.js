@@ -57,13 +57,14 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
         onClick={onToggleNotifications}
         toggleOn={isShowingNotifications}
         className={cc([
+          classes['icon-button'],
           classes['notification-icon'],
           { [classes['has-notifications']]: hasNotifications, [classes['is-active']]: isShowingNotifications },
         ])}
       >
         <NotificationsIcon />
       </IconButton>
-      <div className={classes['menu-container']}>
+      <div className={cc([classes['menu-container'], classes['icon-button']])}>
         <IconButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <DotsIcon />
         </IconButton>
@@ -73,7 +74,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
         />
       </div>
 
-      <IconButton onClick={onMinimizeClick}>
+      <IconButton className={classes['icon-button']} onClick={onMinimizeClick}>
         <FullscreenIcon />
       </IconButton>
     </section>

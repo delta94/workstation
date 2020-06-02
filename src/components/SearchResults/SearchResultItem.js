@@ -1,11 +1,13 @@
 import React from 'react';
+import walkme from '@walkme/sdk';
 
 import classes from './styles.module.scss';
 import SearchResultIcon from './SearchResultIcon';
 
 export default function SearchResultItem({ node }) {
   function onClick() {
-    // ...
+    const url = node.properties.url;
+    walkme.platform.openUrl(url);
   }
 
   return (
@@ -15,7 +17,7 @@ export default function SearchResultItem({ node }) {
         <span className={classes.title}>{node.title}</span>
         <span className={classes['knowledge-base-type']}>{node.properties.knowledgeBaseType}</span>
         <div className={classes.description}>{node.description}</div>
-        {node.properties?.url && <span className={classes.url}>{node.properties?.url}</span>}
+        <span className={classes.url}>{node.properties.url}</span>
       </div>
     </li>
   );
