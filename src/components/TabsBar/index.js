@@ -14,19 +14,35 @@ const iconsToTabsDictionary = {
   'ongoing-tasks': OngoingTasks,
 };
 
-export default function TabsBar({ onClick }) {
+export default function TabsBar({ onSelectSection, isActive }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
 
-  function onClickTab(tab, index) {
-    setActiveTab(tab);
-    onClick({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
-
-    const { width, left } = tabRefs.current[index].getBoundingClientRect();
+  function updateUnderlineSize(tabIndex) {
+    const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
     setUnderlineSize({ width, left });
   }
+
+  function clearUnderlineSize() {
+    setUnderlineSize({ width: 0, left: 0 });
+  }
+
+  function onClickTab(tab, index) {
+    setActiveTab(tab);
+    updateUnderlineSize(index);
+    onSelectSection({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
+  }
+
+  useEffect(() => {
+    if (!isActive) {
+      clearUnderlineSize();
+    } else {
+      const tabIndex = tabs.findIndex(({ id }) => id === activeTab.id);
+      updateUnderlineSize(tabIndex);
+    }
+  }, [isActive]);
 
   return (
     <section className={classes.tabs}>
@@ -34,11 +50,11 @@ export default function TabsBar({ onClick }) {
         {tabs.map((tab, index) => {
           const tabIconName = tab.title.toLowerCase().replace(' ', '-');
           const TabIcon = iconsToTabsDictionary[tabIconName];
-          const isActive = tab === activeTab;
+          const isTabActive = tab === activeTab;
 
           return (
             <li
-              className={cc([classes.tab, { [classes.active]: isActive }])}
+              className={cc([classes.tab, { [classes.active]: isActive && isTabActive }])}
               key={tab.id}
               title={tab.description}
               onClick={() => onClickTab(tab, index)}
@@ -47,7 +63,7 @@ export default function TabsBar({ onClick }) {
               }}
             >
               <TabIcon />
-              {tab.title}
+              <span className={classes['tab-title']}>{tab.title}</span>
             </li>
           );
         })}

@@ -1,0 +1,79 @@
+.notifications {
+  margin: 30px 0;
+  padding: 0;
+
+  .notifications-list-title {
+    color: var(--secondary500);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 16px;
+    margin: 0 30px;
+  }
+
+  .notifications-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .notification {
+    width: 100%;
+    margin-left: 0;
+    padding: 17px 30px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+
+    &:hover {
+      background-color: var(--secondary100);
+
+      .notification-icon,
+      .title {
+        color: var(--primary);
+      }
+    }
+
+    .notification-icon {
+      position: relative;
+      color: var(--secondary500);
+      margin-right: 20px;
+    }
+
+    .title {
+      color: var(--neutral900);
+      font-family: var(--font-primary);
+      font-weight: normal;
+      font-size: 15px;
+      vertical-align: bottom;
+      transition: 0.2s;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding-bottom: 6px;
+    }
+
+    .date {
+      color: var(--secondary500);
+      font-family: var(--font-primary);
+      font-size: 12px;
+    }
+
+    &.is-new {
+      .title {
+        font-weight: 500;
+      }
+
+      .notification-icon::after {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: var(--warning);
+        top: 0;
+        right: -3px;
+      }
+    }
+  }
+}

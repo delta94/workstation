@@ -19,6 +19,7 @@
     "@types/react-dom": "^16.9.0",
     "@walkme/sdk": "^1.0.24-1",
     "classcat": "^4.1.0",
+    "date-fns": "^2.14.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
     "node-sass": "^4.14.1",
@@ -26,6 +27,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
+    "react-smooth-collapse": "^2.1.0",
     "typescript": "~3.7.2"
   },
   "eslintConfig": {

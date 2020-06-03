@@ -1,36 +1,95 @@
 .task-list {
   list-style-type: none;
-  padding: 30px 0;
-  margin: 0;
-  color: var(--neutral900);
-  font-size: 13px;
-  width: 100%;
+  margin: 30px 0;
+  padding: 0;
 
-  .task-item {
-    margin-left: 30px;
-    padding: 16px 30px;
-    cursor: pointer;
+  .task-group {
+    background-image: none;
 
-    background-image: url('../../images/taskRectangle.svg');
-    background-repeat: no-repeat;
-    background-position: 0 50%;
+    &.is-expanded {
+      background-color: red;
+    }
+  }
 
-    &.is-completed {
-      background-image: url('../../images/taskDone.svg');
+  .task-group {
+    border-top: solid 1px var(--border100);
+
+    &.last-of-type {
+      border-bottom: solid 1px var(--border100);
     }
 
-    &.is-crossed-off {
-      text-decoration: line-through;
-    }
-
-    &.is-disabled {
-      color: var(--neutral500);
-    }
-
-    .title {
+    .task-group-title {
+      font-size: 16px;
+      font-family: var(--font-primary);
       font-weight: 500;
-      font-size: 14px;
-      vertical-align: center;
+      padding: 20px 30px;
+      cursor: pointer;
+      color: var(--neutral900);
+
+      &:hover {
+        color: var(--primary);
+        background-color: var(--secondary100);
+
+        .task-group-icon {
+          color: var(--primary);
+        }
+      }
+
+      .task-group-icon {
+        display: inline-block;
+        margin-right: 17px;
+        color: var(--secondary500);
+        transition: all 200ms ease;
+
+        &.is-open {
+          transform: rotate(90deg);
+        }
+      }
     }
+
+    ul {
+      padding-left: 0;
+
+      li {
+        padding-left: 50px;
+        background-position: 50px 50%;
+      }
+    }
+  }
+}
+
+.task-item {
+  width: 100%;
+  margin-left: 0;
+  padding: 12px 30px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  color: var(--neutral900);
+  align-items: center;
+
+  &.is-crossed-off {
+    text-decoration: line-through;
+  }
+
+  &.is-disabled {
+    color: var(--neutral500);
+    cursor: default;
+  }
+
+  &:hover {
+    background-color: var(--secondary100);
+  }
+
+  &:hover:not(.is-disabled) {
+    color: var(--primary);
+  }
+
+  .icon {
+    margin-right: 18px;
+  }
+
+  .title {
+    font-size: 14px;
   }
 }

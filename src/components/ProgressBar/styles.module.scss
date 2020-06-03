@@ -1,0 +1,29 @@
+.progress-bar {
+  list-style-type: none;
+  margin: 30px;
+  padding: 0;
+
+  .title {
+    color: var(--secondary500);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-bottom: 16px;
+  }
+
+  .progress-bar-indicator {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background-color: var(--secondary100);
+
+    &:after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: var(--indicator-percent);
+      background-color: var(--primary);
+      transition: width 800ms cubic-bezier(0.68, -0.55, 0.265, 1.2);
+    }
+  }
+}

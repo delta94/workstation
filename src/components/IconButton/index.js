@@ -2,11 +2,11 @@ import React from 'react';
 import cc from 'classcat';
 import classes from './styles.module.scss';
 
-export default function IconButton({ children, className = '' }) {
+export default function IconButton({ children, toggleOn = false, className = '', ...otherProps }) {
   return (
-    <div className={cc([classes['icon-button'], className])}>
+    <button className={cc([classes['icon-button'], className, { [classes['toggle-on']]: toggleOn }])} {...otherProps}>
       <div className={classes['growing-circle']} />
-      {children}
-    </div>
+      <div className={classes.icon}>{children}</div>
+    </button>
   );
 }

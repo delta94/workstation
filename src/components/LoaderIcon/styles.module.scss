@@ -1,0 +1,13 @@
+.spinner {
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

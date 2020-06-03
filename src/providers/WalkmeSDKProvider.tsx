@@ -2,7 +2,14 @@ import React, { createContext, useEffect, useState } from 'react';
 import walkme from '@walkme/sdk';
 
 type AppPropTypes = { children: React.ReactNode };
-type WalkmeSdkContextTypes = { wmSearch: object; wmNotifications: object; uiTreeSDK: object; languagesSDK: object };
+type WalkmeSdkContextTypes = {
+  wmSearch: object;
+  wmNotifications: object;
+  notifications: object;
+  uiTreeSDK: object;
+  tabTypes: object;
+  languagesSDK: object;
+};
 
 export const WalkmeSDKContext = createContext<WalkmeSdkContextTypes | null>(null);
 
@@ -21,8 +28,18 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
           walkme.content.getContentUITree(),
           walkme.language.getLanguagesList(),
         ]);
-        setSdk({ wmSearch, wmNotifications, uiTreeSDK, languagesSDK });
+        const notifications = await wmNotifications.getNotifications();
+        const tabTypes = (walkme.content as any).TabTypes;
+
         setLoading(false);
+        setSdk({
+          wmSearch,
+          wmNotifications,
+          notifications,
+          uiTreeSDK,
+          tabTypes,
+          languagesSDK,
+        });
       } catch (error) {
         setLoading(false);
         setError(true);

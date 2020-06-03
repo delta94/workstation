@@ -1,28 +1,59 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import Header from '../Header';
-import TabsLayout from '../TabsBar';
+import TabsBar from '../TabsBar';
 import HelpList from '../HelpList';
 import TaskList from '../TaskList';
+import SearchResults from '../SearchResults';
+import NotificationList from '../NotificationList';
 
 import classes from './styles.module.scss';
+import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
 const contentTypeToComponentDictionary = {
   help: HelpList,
   tasks: TaskList,
+  notifications: NotificationList,
+  search: ({ content, resetSearch }) => <SearchResults searchTerm={content} resetSearch={resetSearch} />,
   microApp: () => <div>Micro App</div>,
-  undefined: () => <div>NO RENDERER OR CONTENT</div>,
+  undefined: () => <SearchResults searchTerm={'content'} />,
 };
 
 function Layout() {
+  const { tabTypes } = useContext(WalkmeSDKContext);
   const [activeSection, setActiveSection] = useState({ contentType: undefined, content: undefined });
-
+  const [previousActiveSection, setPreviousActiveSection] = useState({ contentType: undefined, content: undefined });
+  const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
+  const contentSection = useRef(null);
+
+  function onSetActiveSection(newActiveSection) {
+    setPreviousActiveSection(activeSection);
+    setActiveSection(newActiveSection);
+  }
+
+  function onDeselectActiveSection() {
+    setActiveSection(previousActiveSection);
+  }
+
+  function areTabsActive() {
+    return Object.values(tabTypes).includes(activeSection.contentType);
+  }
+
+  useEffect(() => {
+    contentSection.current.scrollTo(0, 0);
+    setTabsAreActive(areTabsActive);
+  }, [activeSection]);
+
   return (
     <>
-      <Header onClick={setActiveSection} />
-      <TabsLayout onClick={setActiveSection} />
-      <section className={classes.content} style={{ whiteSpace: 'pre' }}>
+      <Header
+        onSelectSection={onSetActiveSection}
+        onDeselectSection={onDeselectActiveSection}
+        activeSection={activeSection}
+      />
+      <TabsBar onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
+      <section ref={contentSection} className={classes.content}>
         <ContentComponent content={activeSection.content} />
       </section>
     </>
