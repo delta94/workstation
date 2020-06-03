@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import walkme from '@walkme/sdk';
 
+import Loader from '../components/StateScreens/Loader';
+import NoConnection from '../components/StateScreens/NoConnection';
+
 type AppPropTypes = { children: React.ReactNode };
 type WalkmeSdkContextTypes = {
   wmSearch: object;
@@ -18,6 +21,19 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  function getChildren(): React.ReactNode {
+    switch (true) {
+      case loading:
+        return <Loader style={{ height: '100vh' }} />;
+      case error:
+        return <NoConnection style={{ height: '100vh' }} />;
+      case !!sdk:
+        return children;
+      default:
+        return <NoConnection style={{ height: '100vh' }} />;
+    }
+  }
+
   useEffect(() => {
     (async function init() {
       try {
@@ -31,7 +47,6 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
         const notifications = await wmNotifications.getNotifications();
         const tabTypes = (walkme.content as any).TabTypes;
 
-        setLoading(false);
         setSdk({
           wmSearch,
           wmNotifications,
@@ -40,6 +55,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
           tabTypes,
           languagesSDK,
         });
+        setLoading(false);
       } catch (error) {
         setLoading(false);
         setError(true);
@@ -47,5 +63,5 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     })();
   }, []);
 
-  return <WalkmeSDKContext.Provider value={sdk}>{sdk ? children : 'Loading'}</WalkmeSDKContext.Provider>;
+  return <WalkmeSDKContext.Provider value={sdk}>{getChildren()}</WalkmeSDKContext.Provider>;
 }
