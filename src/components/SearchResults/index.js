@@ -4,37 +4,51 @@ import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
 import TaskItem from '../TaskList/TaskItem';
 import HelpItem from '../HelpList/HelpItem';
+import EmptySearch from '../StateScreens/EmptySearch';
+import Loader from '../StateScreens/Loader';
 
 import { findInSearchApi, findInUiTree } from './helpers';
 import SearchResultItem from './SearchResultItem';
 import { ReactComponent as BackArrowIcon } from './back-arrow.svg';
 import classes from './styles.module.scss';
 
-export default function SearchResults({ searchTerm, resetSearch }) {
+export default function SearchResults({ searchTerm }) {
   const { uiTreeSDK: uiTree, wmSearch } = useContext(WalkmeSDKContext);
   const [uiTreeResults, setUiTreeResults] = useState(undefined);
   const [apiSearchResults, setApiSearchResults] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
+
     (async function fetchData() {
       setApiSearchResults(await findInSearchApi(searchTerm, wmSearch));
       setUiTreeResults(findInUiTree(searchTerm, uiTree));
+      setIsLoading(false);
     })();
   }, [searchTerm]);
 
+  const noSearchResults = !uiTreeResults?.length && !apiSearchResults?.length && !isLoading;
   return (
-    <div className={classes['search-results']}>
-      <div className={classes.return}>
-        <BackArrowIcon />
-        Results for "{searchTerm}"
-      </div>
-      {uiTreeResults?.map((node) => {
-        const Component = node.type === 'task' ? TaskItem : HelpItem;
-        return <Component node={node} key={node.id} />;
-      })}
-      {apiSearchResults?.map((node, index) => {
-        return <SearchResultItem node={node} key={index} />;
-      })}
-    </div>
+    <>
+      {isLoading && <Loader />}
+      {noSearchResults ? (
+        <EmptySearch />
+      ) : (
+        <div className={classes['search-results']}>
+          <div className={classes.return}>
+            <BackArrowIcon />
+            Results for "{searchTerm}"
+          </div>
+          {uiTreeResults?.map((node) => {
+            const Component = node.type === 'task' ? TaskItem : HelpItem;
+            return <Component node={node} key={node.id} />;
+          })}
+          {apiSearchResults?.map((node, index) => {
+            return <SearchResultItem node={node} key={index} />;
+          })}
+        </div>
+      )}
+    </>
   );
 }
