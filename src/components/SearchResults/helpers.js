@@ -22,18 +22,15 @@ function matchAgainstArray(array, matchWord) {
 function matchMethod(node, searchTerm) {
   switch (node.type) {
     case walkme.content.TypeNames.Shuttle:
-      console.log('shuttle');
       return (
         matchAgainstArray([node.title, node.properties.url], searchTerm) ||
         (node.keywords && matchAgainstArray(node.keywords, searchTerm))
       );
 
     case walkme.content.TypeNames.Task:
-      console.log('task');
       return matchWords(node.title, searchTerm) || (node.keywords && matchAgainstArray(node.keywords, searchTerm));
 
     default:
-      console.log('default');
       return (
         matchAgainstArray([node.title, node.description], searchTerm) ||
         (node.keywords && matchAgainstArray(node.keywords, searchTerm))
