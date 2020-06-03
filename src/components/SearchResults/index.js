@@ -7,9 +7,10 @@ import HelpItem from '../HelpList/HelpItem';
 
 import { findInSearchApi, findInUiTree } from './helpers';
 import SearchResultItem from './SearchResultItem';
+import { ReactComponent as BackArrowIcon } from './back-arrow.svg';
 import classes from './styles.module.scss';
 
-export default function SearchResults({ searchTerm }) {
+export default function SearchResults({ searchTerm, resetSearch }) {
   const { uiTreeSDK: uiTree, wmSearch } = useContext(WalkmeSDKContext);
   const [uiTreeResults, setUiTreeResults] = useState(undefined);
   const [apiSearchResults, setApiSearchResults] = useState(undefined);
@@ -23,6 +24,10 @@ export default function SearchResults({ searchTerm }) {
 
   return (
     <div className={classes['search-results']}>
+      <div className={classes.return}>
+        <BackArrowIcon />
+        Results for "{searchTerm}"
+      </div>
       {uiTreeResults?.map((node) => {
         const Component = node.type === 'task' ? TaskItem : HelpItem;
         return <Component node={node} key={node.id} />;

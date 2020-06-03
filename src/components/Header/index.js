@@ -36,6 +36,14 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
     setIsShowingNotifications(!isShowingNotifications);
   }
 
+  function onSearchTermChange(searchTerm) {
+    if (!searchTerm) {
+      onDeselectSection();
+    } else {
+      onSelectSection({ contentType: 'search', content: searchTerm });
+    }
+  }
+
   useEffect(() => {
     const hasNewNotifications = notifications.some((notification) => !notification.properties.isPlayed);
     setHasNotifications(hasNewNotifications);
@@ -51,7 +59,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
     <section className={cc([classes.header, { [classes['search-focus']]: isSearchFocus }])}>
       <Logo className={classes.logo} />
       <div className={classes['search-input-wrapper']}>
-        <SearchInput onFocusChange={setIsSearchFocus} />
+        <SearchInput onFocusChange={setIsSearchFocus} onChange={onSearchTermChange} />
       </div>
       <IconButton
         onClick={onToggleNotifications}

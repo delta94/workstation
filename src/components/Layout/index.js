@@ -14,6 +14,7 @@ const contentTypeToComponentDictionary = {
   help: HelpList,
   tasks: TaskList,
   notifications: NotificationList,
+  search: ({ content, resetSearch }) => <SearchResults searchTerm={content} resetSearch={resetSearch} />,
   microApp: () => <div>Micro App</div>,
   undefined: () => <SearchResults searchTerm={'content'} />,
 };
