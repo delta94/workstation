@@ -63,7 +63,7 @@ export default function TabsBar({ onSelectSection, isActive }) {
               }}
             >
               <TabIcon />
-              {tab.title}
+              <span className={classes['tab-title']}>{tab.title}</span>
             </li>
           );
         })}

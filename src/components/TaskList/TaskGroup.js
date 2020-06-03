@@ -4,7 +4,7 @@ import SmoothCollapse from 'react-smooth-collapse';
 
 import TaskItem from './TaskItem';
 
-import { ReactComponent as TaskGroupArrow } from './taskGroupArrow.svg';
+import { ReactComponent as TaskGroupArrow } from './icons/taskGroupArrow.svg';
 import classes from './styles.module.scss';
 
 export default function TaskGroup({ node, className = '' }) {
