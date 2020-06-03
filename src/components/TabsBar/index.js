@@ -8,11 +8,7 @@ import { ReactComponent as Bookmarks } from './icons/bookmarks.svg';
 import { ReactComponent as OngoingTasks } from './icons/ongoing-tasks.svg';
 import classes from './styles.module.scss';
 
-const iconsToTabsDictionary = {
-  'assistant-home': AssistantHome,
-  bookmarks: Bookmarks,
-  'ongoing-tasks': OngoingTasks,
-};
+const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
 export default function TabsBar({ onSelectSection, isActive }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
@@ -48,8 +44,7 @@ export default function TabsBar({ onSelectSection, isActive }) {
     <section className={classes.tabs}>
       <ul className={classes['tabs-list']}>
         {tabs.map((tab, index) => {
-          const tabIconName = tab.title.toLowerCase().replace(' ', '-');
-          const TabIcon = iconsToTabsDictionary[tabIconName];
+          const TabIcon = iconsArray[index];
           const isTabActive = tab === activeTab;
 
           return (
