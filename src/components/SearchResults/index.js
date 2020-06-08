@@ -12,7 +12,7 @@ import SearchResultItem from './SearchResultItem';
 import { ReactComponent as BackArrowIcon } from './back-arrow.svg';
 import classes from './styles.module.scss';
 
-export default function SearchResults({ searchTerm }) {
+export default function SearchResults({ searchTerm, onDeselectSection }) {
   const { uiTreeSDK: uiTree, wmSearch } = useContext(WalkmeSDKContext);
   const [uiTreeResults, setUiTreeResults] = useState(undefined);
   const [apiSearchResults, setApiSearchResults] = useState(undefined);
@@ -36,10 +36,10 @@ export default function SearchResults({ searchTerm }) {
         <EmptySearch />
       ) : (
         <div className={classes['search-results']}>
-          <div className={classes.return}>
+          <button className={classes.return} onClick={onDeselectSection}>
             <BackArrowIcon />
             Results for "{searchTerm}"
-          </div>
+          </button>
           {uiTreeResults?.map((node) => {
             const Component = node.type === 'task' ? TaskItem : HelpItem;
             return <Component node={node} key={node.id} />;

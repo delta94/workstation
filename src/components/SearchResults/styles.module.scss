@@ -3,7 +3,7 @@
   margin: 30px 0;
   padding: 0;
 
-  .return {
+  button.return {
     color: var(--neutral500);
     font-style: italic;
     cursor: pointer;
@@ -12,6 +12,9 @@
     margin-left: 30px;
     margin-bottom: 20px;
     align-items: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
 
     &:hover {
       color: var(--primary);

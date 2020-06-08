@@ -37,11 +37,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   }
 
   function onSearchTermChange(searchTerm) {
-    if (!searchTerm) {
-      onDeselectSection();
-    } else {
-      onSelectSection({ contentType: 'search', content: searchTerm });
-    }
+    onSelectSection({ contentType: 'search', content: searchTerm });
   }
 
   useEffect(() => {
@@ -52,6 +48,8 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   useEffect(() => {
     if (activeSection?.contentType !== 'notifications') {
       setIsShowingNotifications(false);
+    } else {
+      setIsShowingNotifications(true);
     }
   }, [activeSection]);
 

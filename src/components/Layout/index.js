@@ -6,6 +6,7 @@ import HelpList from '../HelpList';
 import TaskList from '../TaskList';
 import SearchResults from '../SearchResults';
 import NotificationList from '../NotificationList';
+import NoData from '../StateScreens/NoData';
 
 import classes from './styles.module.scss';
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
@@ -14,9 +15,10 @@ const contentTypeToComponentDictionary = {
   help: HelpList,
   tasks: TaskList,
   notifications: NotificationList,
-  search: ({ content, resetSearch }) => <SearchResults searchTerm={content} resetSearch={resetSearch} />,
-  microApp: () => <div>Micro App</div>,
-  undefined: () => <SearchResults searchTerm={'content'} />,
+  search: ({ content, onDeselectSection }) => (
+    <SearchResults searchTerm={content} onDeselectSection={onDeselectSection} />
+  ),
+  undefined: () => <NoData />,
 };
 
 function Layout() {
@@ -28,8 +30,20 @@ function Layout() {
   const contentSection = useRef(null);
 
   function onSetActiveSection(newActiveSection) {
-    setPreviousActiveSection(activeSection);
-    setActiveSection(newActiveSection);
+    const changeSearchTerm = newActiveSection.contentType === 'search' && activeSection.contentType === 'search';
+
+    if (!changeSearchTerm) {
+      setPreviousActiveSection(activeSection);
+      setActiveSection(newActiveSection);
+    }
+
+    if (changeSearchTerm) {
+      if (!newActiveSection.content) {
+        setActiveSection(previousActiveSection);
+      } else {
+        setActiveSection(newActiveSection);
+      }
+    }
   }
 
   function onDeselectActiveSection() {
@@ -54,7 +68,7 @@ function Layout() {
       />
       <TabsBar onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <ContentComponent content={activeSection.content} />
+        <ContentComponent content={activeSection.content} onDeselectSection={onDeselectActiveSection} />
       </section>
     </>
   );
