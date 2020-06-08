@@ -20,7 +20,7 @@
       padding-right: 2px;
       cursor: pointer;
       color: var(--secondary500);
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-secondary), sans-serif;
       display: inline-flex;
       align-items: center;
       transition: all 250ms ease;
