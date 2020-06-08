@@ -2,8 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 
 import Header from '../Header';
 import TabsBar from '../TabsBar';
-import HelpList from '../HelpList';
-import TaskList from '../TaskList';
+import TabsContent from '../TabsContent';
 import SearchResults from '../SearchResults';
 import NotificationList from '../NotificationList';
 import NoData from '../StateScreens/NoData';
@@ -12,18 +11,23 @@ import classes from './styles.module.scss';
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
 const contentTypeToComponentDictionary = {
-  help: HelpList,
-  tasks: TaskList,
+  help: TabsContent,
+  tasks: TabsContent,
   notifications: NotificationList,
-  search: ({ content, onDeselectSection }) => (
-    <SearchResults searchTerm={content} onDeselectSection={onDeselectSection} />
+  search: ({ path, onDeselectSection }) => (
+    <SearchResults searchTerm={path.searchTerm} onDeselectSection={onDeselectSection} />
   ),
   undefined: () => <NoData />,
 };
 
 function Layout() {
-  const { tabTypes } = useContext(WalkmeSDKContext);
-  const [activeSection, setActiveSection] = useState({ contentType: undefined, content: undefined });
+  const { uiTreeSDK: tabs, tabTypes } = useContext(WalkmeSDKContext);
+
+  // default starting screen is the first tab
+  const [activeSection, setActiveSection] = useState({
+    contentType: tabs[0].properties.tabType,
+    path: { index: 0 },
+  });
   const [previousActiveSection, setPreviousActiveSection] = useState({ contentType: undefined, content: undefined });
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
@@ -38,7 +42,7 @@ function Layout() {
     }
 
     if (changeSearchTerm) {
-      if (!newActiveSection.content) {
+      if (!newActiveSection.path.searchTerm) {
         setActiveSection(previousActiveSection);
       } else {
         setActiveSection(newActiveSection);
@@ -56,7 +60,7 @@ function Layout() {
 
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
-    setTabsAreActive(areTabsActive);
+    setTabsAreActive(areTabsActive());
   }, [activeSection]);
 
   return (
@@ -66,9 +70,9 @@ function Layout() {
         onDeselectSection={onDeselectActiveSection}
         activeSection={activeSection}
       />
-      <TabsBar onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
+      <TabsBar path={activeSection.path} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <ContentComponent content={activeSection.content} onDeselectSection={onDeselectActiveSection} />
+        <ContentComponent path={activeSection.path} onDeselectSection={onDeselectActiveSection} />
       </section>
     </>
   );

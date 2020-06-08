@@ -4,14 +4,6 @@
   padding: 0;
 
   .task-group {
-    background-image: none;
-
-    &.is-expanded {
-      background-color: red;
-    }
-  }
-
-  .task-group {
     border-top: solid 1px var(--border100);
 
     &.last-of-type {
@@ -75,6 +67,10 @@
   &.is-disabled {
     color: var(--neutral500);
     cursor: default;
+
+    .icon {
+      color: var(--neutral500);
+    }
   }
 
   &:hover {
@@ -87,6 +83,7 @@
 
   .icon {
     margin-right: 18px;
+    color: var(--primary);
   }
 
   .title {

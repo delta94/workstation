@@ -9,16 +9,16 @@ import EmptyNotifications from '../StateScreens/EmptyNotifications';
 import { ReactComponent as BellIcon } from './bell.svg';
 import classes from './styles.module.scss';
 
-export default function NotificationList({ content }) {
-  const { wmNotifications } = useContext(WalkmeSDKContext);
+export default function NotificationList() {
+  const { wmNotifications, notifications } = useContext(WalkmeSDKContext);
 
   return (
     <>
-      {content.length ? (
+      {notifications?.length ? (
         <div className={classes.notifications}>
           <div className={classes['notifications-list-title']}>Newest notifications</div>
           <ul className={classes['notifications-list']}>
-            {content.map((node) => (
+            {notifications.map((node) => (
               <li
                 key={node.id}
                 className={cc([classes.notification, { [classes['is-new']]: !node.properties.isPlayed }])}

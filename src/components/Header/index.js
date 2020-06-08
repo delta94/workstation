@@ -28,7 +28,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
 
   function onToggleNotifications() {
     if (!isShowingNotifications) {
-      onSelectSection({ contentType: 'notifications', content: notifications });
+      onSelectSection({ contentType: 'notifications' });
     } else {
       onDeselectSection();
     }
@@ -37,7 +37,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   }
 
   function onSearchTermChange(searchTerm) {
-    onSelectSection({ contentType: 'search', content: searchTerm });
+    onSelectSection({ contentType: 'search', path: { searchTerm } });
   }
 
   useEffect(() => {
