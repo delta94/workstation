@@ -34,28 +34,56 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     }
   }
 
+  async function getAppData() {
+    const [wmSearch, wmNotifications, uiTreeSDK, languagesSDK] = await Promise.all([
+      walkme.apps.getApp('search'),
+      walkme.apps.getApp('notifications'),
+      walkme.content.getContentUITree(),
+      walkme.language.getLanguagesList(),
+    ]);
+    const notifications = await wmNotifications.getNotifications();
+    const tabTypes = (walkme.content as any).TabTypes;
+
+    setSdk({
+      wmSearch,
+      wmNotifications,
+      notifications,
+      uiTreeSDK,
+      tabTypes,
+      languagesSDK,
+    });
+  }
+
+  async function handleBeforeOpen() {
+    await getAppData();
+    setLoading(false);
+    setError(false);
+  }
+
+  function handleBeforeClose() {
+    setLoading(true);
+    setError(false);
+  }
+
+  function setAppListeners() {
+    const { BeforeOpen, BeforeClose } = (walkme.events as any).EventTypes;
+
+    walkme.events.off(BeforeOpen, handleBeforeOpen);
+    walkme.events.off(BeforeClose, handleBeforeClose);
+
+    walkme.events.on(BeforeOpen, handleBeforeOpen);
+    walkme.events.on(BeforeClose, handleBeforeClose);
+  }
+
   useEffect(() => {
     (async function init() {
       try {
         await walkme.init();
-        const [wmSearch, wmNotifications, uiTreeSDK, languagesSDK] = await Promise.all([
-          walkme.apps.getApp('search'),
-          walkme.apps.getApp('notifications'),
-          walkme.content.getContentUITree(),
-          walkme.language.getLanguagesList(),
-        ]);
-        const notifications = await wmNotifications.getNotifications();
-        const tabTypes = (walkme.content as any).TabTypes;
+        await getAppData();
+        setAppListeners();
 
-        setSdk({
-          wmSearch,
-          wmNotifications,
-          notifications,
-          uiTreeSDK,
-          tabTypes,
-          languagesSDK,
-        });
         setLoading(false);
+        setError(false);
       } catch (error) {
         setLoading(false);
         setError(true);
