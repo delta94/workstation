@@ -18,7 +18,6 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   const { notifications } = useContext(WalkmeSDKContext);
   const [hasNotifications, setHasNotifications] = useState(false);
   const [isShowingNotifications, setIsShowingNotifications] = useState(false);
-
   const [isSearchFocus, setIsSearchFocus] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
