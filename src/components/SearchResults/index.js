@@ -40,13 +40,15 @@ export default function SearchResults({ searchTerm, onDeselectSection }) {
             <BackArrowIcon />
             Results for "{searchTerm}"
           </button>
-          {uiTreeResults?.map((node) => {
-            const Component = node.type === 'task' ? TaskItem : HelpItem;
-            return <Component node={node} key={node.id} />;
-          })}
-          {apiSearchResults?.map((node, index) => {
-            return <SearchResultItem node={node} key={index} />;
-          })}
+          <ul className={classes['search-results-list']}>
+            {uiTreeResults?.map((node) => {
+              const Component = node.type === 'task' ? TaskItem : HelpItem;
+              return <Component node={node} key={node.id} />;
+            })}
+            {apiSearchResults?.map((node, index) => {
+              return <SearchResultItem node={node} key={index} />;
+            })}
+          </ul>
         </div>
       )}
     </>

@@ -13,11 +13,13 @@ export default function HelpItem({ node }) {
 
   return (
     <li className={classes['help-item']} key={node.id} onClick={onClick}>
-      <HelpIcon type={node.type} className={classes['help-list-icon']} />
-      <div>
-        <span className={classes.title}>{node.title}</span>
-        <span className={classes.description}>{node.description}</span>
-        {node.properties?.url && <span className={classes.url}>{node.properties?.url}</span>}
+      <div className={classes['help-list-icon']}>
+        <HelpIcon type={node.type} />
+      </div>
+      <div className={classes['help-item-text']}>
+        <div className={classes.title}>{node.title}</div>
+        <div className={classes.description}>{node.description}</div>
+        {node.properties?.url && <div className={classes.url}>{node.properties?.url}</div>}
       </div>
     </li>
   );
