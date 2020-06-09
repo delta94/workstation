@@ -1,6 +1,6 @@
 .state-screen {
   height: 100%;
-  max-width: 314px;
+  width: 100%;
   margin: 0 auto;
   color: var(--secondary500);
   display: flex;
@@ -13,6 +13,11 @@
   line-height: 36px;
   letter-spacing: -0.2px;
   text-align: center;
+  background-color: var(--background);
+
+  .state-screen-content {
+    max-width: 314px;
+  }
 
   .icon {
     margin-bottom: 20px;
