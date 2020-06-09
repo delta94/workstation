@@ -15,7 +15,7 @@ export default function HeaderMenuButton() {
 
   return (
     <div ref={menuRef} className={cc([classes['menu-container'], classes['icon-button']])}>
-      <IconButton onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      <IconButton className={classes['icon-button']} onClick={() => setIsMenuOpen(!isMenuOpen)}>
         <DotsIcon />
       </IconButton>
       <HeaderMenu setIsOpen={setIsMenuOpen} className={cc([classes['header-menu'], { [classes.show]: isMenuOpen }])} />
