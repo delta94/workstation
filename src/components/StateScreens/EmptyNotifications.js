@@ -1,11 +1,11 @@
 import React from 'react';
 
+import { ReactComponent as EmptyNotificationsIcon } from './icons/no-notifications.svg';
 import StateScreen from './StateScreen';
-import { ReactComponent as NoConnectionIcon } from './icons/no-connection.svg';
 
-export default function NoConnection() {
+export default function EmptyNotifications() {
   return (
-    <StateScreen iconComponent={NoConnectionIcon}>
+    <StateScreen iconComponent={EmptyNotificationsIcon}>
       <div>No notifications</div>
     </StateScreen>
   );

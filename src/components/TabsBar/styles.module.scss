@@ -20,10 +20,11 @@
       padding-right: 2px;
       cursor: pointer;
       color: var(--secondary500);
-      font-family: 'Poppins', sans-serif;
+      font-family: var(--font-secondary), sans-serif;
       display: inline-flex;
       align-items: center;
       transition: all 250ms ease;
+      min-width: 0;
 
       &:last-child {
         margin-right: 0;
@@ -41,6 +42,12 @@
       svg {
         margin-right: 11px;
         flex-shrink: 0;
+      }
+
+      .tab-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

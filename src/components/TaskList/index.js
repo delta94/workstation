@@ -2,6 +2,7 @@ import React from 'react';
 import cc from 'classcat';
 
 import ProgressBar from '../ProgressBar';
+import NoData from '../StateScreens/NoData';
 
 import TaskGroup from './TaskGroup';
 import TaskItem from './TaskItem';
@@ -13,21 +14,27 @@ export default function TaskList({ content }) {
   const percentCompleteTasks = calculateCompletedPercent(content);
 
   return (
-    <div>
-      <ProgressBar percent={percentCompleteTasks} />
-      <ul className={classes['task-list']}>
-        {content.map((node, index) => {
-          if (node.type === 'category') {
-            const isLastOfType = Boolean(index === content.length - 1 || content[index + 1].type !== 'category');
+    <>
+      {content.length ? (
+        <>
+          <ProgressBar percent={percentCompleteTasks} />
+          <ul className={classes['task-list']}>
+            {content.map((node, index) => {
+              if (node.type === 'category') {
+                const isLastOfType = Boolean(index === content.length - 1 || content[index + 1].type !== 'category');
 
-            return (
-              <TaskGroup key={node.id} node={node} className={cc([{ [classes['last-of-type']]: isLastOfType }])} />
-            );
-          }
+                return (
+                  <TaskGroup key={node.id} node={node} className={cc([{ [classes['last-of-type']]: isLastOfType }])} />
+                );
+              }
 
-          return <TaskItem key={node.id} node={node} />;
-        })}
-      </ul>
-    </div>
+              return <TaskItem key={node.id} node={node} />;
+            })}
+          </ul>
+        </>
+      ) : (
+        <NoData />
+      )}
+    </>
   );
 }

@@ -16,8 +16,6 @@ export default function HeaderMenu({ setIsOpen, className = '' }) {
   const [isLanguagesExpanded, setIsLanguagesExpanded] = useState(true);
   const languages = useMemo(() => walkme.language.languages);
   const showLogout = useMemo(() => walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP);
-  const menuRef = useRef(null);
-  useClickOutside(menuRef, () => setIsOpen(false));
 
   function toggleDropDown() {
     setIsLanguagesExpanded(!isLanguagesExpanded);
@@ -36,7 +34,7 @@ export default function HeaderMenu({ setIsOpen, className = '' }) {
   }
 
   return (
-    <ul ref={menuRef} className={cc([classes['header-menu'], className])}>
+    <ul className={cc([classes['header-menu'], className])}>
       {languages.length > 1 && (
         <>
           <li>

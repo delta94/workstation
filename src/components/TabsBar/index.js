@@ -8,48 +8,50 @@ import { ReactComponent as Bookmarks } from './icons/bookmarks.svg';
 import { ReactComponent as OngoingTasks } from './icons/ongoing-tasks.svg';
 import classes from './styles.module.scss';
 
-const iconsToTabsDictionary = {
-  'assistant-home': AssistantHome,
-  bookmarks: Bookmarks,
-  'ongoing-tasks': OngoingTasks,
-};
+const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
-export default function TabsBar({ onSelectSection, isActive }) {
+export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
 
-  function updateUnderlineSize(tabIndex) {
-    const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
-    setUnderlineSize({ width, left });
-  }
-
   function clearUnderlineSize() {
     setUnderlineSize({ width: 0, left: 0 });
+  }
+
+  function updateUnderlineSize(tabIndex) {
+    if (tabIndex === undefined || tabIndex === null) {
+      clearUnderlineSize();
+    } else {
+      const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
+      setUnderlineSize({ width, left });
+    }
   }
 
   function onClickTab(tab, index) {
     setActiveTab(tab);
     updateUnderlineSize(index);
-    onSelectSection({ contentType: tab.properties.tabType, content: tab.childNodes, data: tab });
+    onSelectSection({ path: { index }, contentType: tabs[index].properties.tabType });
   }
 
   useEffect(() => {
     if (!isActive) {
       clearUnderlineSize();
     } else {
-      const tabIndex = tabs.findIndex(({ id }) => id === activeTab.id);
       updateUnderlineSize(tabIndex);
     }
   }, [isActive]);
+
+  useEffect(() => {
+    updateUnderlineSize(tabIndex);
+  }, [tabIndex]);
 
   return (
     <section className={classes.tabs}>
       <ul className={classes['tabs-list']}>
         {tabs.map((tab, index) => {
-          const tabIconName = tab.title.toLowerCase().replace(' ', '-');
-          const TabIcon = iconsToTabsDictionary[tabIconName];
+          const TabIcon = iconsArray[index];
           const isTabActive = tab === activeTab;
 
           return (

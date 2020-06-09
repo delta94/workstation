@@ -12,12 +12,14 @@ export default function SearchResultItem({ node }) {
 
   return (
     <li className={classes['search-result-item']} onClick={onClick}>
-      <SearchResultIcon type={node.properties.knowledgeBaseType.toLowerCase()} className={classes['icon']} />
-      <div>
-        <span className={classes.title}>{node.title}</span>
-        <span className={classes['knowledge-base-type']}>{node.properties.knowledgeBaseType}</span>
+      <div className={classes['icon']}>
+        <SearchResultIcon type={node.properties.knowledgeBaseType.toLowerCase()} />
+      </div>
+      <div className={classes['search-result-text']}>
+        <div className={classes.title}>{`${node.title}　`}</div>
+        <div className={classes['knowledge-base-type']}>{node.properties.knowledgeBaseType}</div>
         <div className={classes.description}>{node.description}</div>
-        <span className={classes.url}>{node.properties.url}</span>
+        <div className={classes.url}>{node.properties.url}</div>
       </div>
     </li>
   );

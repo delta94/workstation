@@ -13,7 +13,7 @@
     box-shadow: inset 0 0 0 1.5px rgba(26, 155, 219, 0);
     outline: none;
     transition: box-shadow 250ms linear;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-secondary), sans-serif;
     position: relative;
 
     &::placeholder {
