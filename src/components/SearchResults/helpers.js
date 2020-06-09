@@ -2,7 +2,7 @@ import walkme from '@walkme/sdk';
 import uniqWith from 'lodash/uniqWith';
 import isEqual from 'lodash/isEqual';
 
-function searchInNode(node, searchTerm) {
+function findInNode(node, searchTerm) {
   const description = node.description ?? '';
   const url = node.properties.url ?? '';
   const keywords = node.keywords?.join(' ') ?? '';
@@ -30,7 +30,7 @@ export function findInUiTree(searchTerm, uiTree) {
     flattenUITree(uiTree)
       .filter((node) => ![walkme.content.TypeNames.Survey].includes(node.type))
       // get items that include the search term in their attributes
-      .filter((node) => searchInNode(node, searchTerm))
+      .filter((node) => findInNode(node, searchTerm))
   );
 }
 
