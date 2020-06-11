@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TabsBar renders correctly should render correctly 1`] = `
+<div>
+  <section
+    class="tabs"
+    data-testid="tabs-bar"
+  >
+    <ul
+      class="tabs-list"
+    >
+      <li
+        class="tab"
+        title="Description for tab-762"
+      >
+        <svg>
+          assistant-home.svg
+        </svg>
+        <span
+          class="tab-title"
+        >
+          Assistant Home
+        </span>
+      </li>
+      <li
+        class="tab"
+        title="Description for tab-313"
+      >
+        <svg>
+          ongoing-tasks.svg
+        </svg>
+        <span
+          class="tab-title"
+        >
+          Ongoing Tasks
+        </span>
+      </li>
+      <li
+        class="tab"
+        title="Description for tab-298"
+      >
+        <svg>
+          bookmarks.svg
+        </svg>
+        <span
+          class="tab-title"
+        >
+          Bookmarks
+        </span>
+      </li>
+    </ul>
+    <div
+      class="tabs-underline"
+    />
+  </section>
+</div>
+`;

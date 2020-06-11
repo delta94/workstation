@@ -35,7 +35,7 @@ export default function SearchResults({ searchTerm, onDeselectSection }) {
       {noSearchResults ? (
         <EmptySearch />
       ) : (
-        <div className={classes['search-results']}>
+        <div className={classes['search-results']} data-testid="search-results">
           <button className={classes.return} onClick={onDeselectSection}>
             <BackArrowIcon />
             Results for "{searchTerm}"

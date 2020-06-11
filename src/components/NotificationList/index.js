@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 import cc from 'classcat';
 
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
@@ -29,7 +30,7 @@ export default function NotificationList() {
                 </div>
                 <div>
                   <div className={classes.title}>{node.title}</div>
-                  <div className={classes.date}>{format(node.properties.date, 'd.M.y | h:mma')}</div>
+                  <div className={classes.date}>{format(parseISO(node.properties.date), 'd.M.y | h:mma')}</div>
                 </div>
               </li>
             ))}

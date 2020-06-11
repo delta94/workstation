@@ -6,10 +6,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "postbuild": "rm -rf dist && mv build dist",
-    "test": "echo \"TBD\"",
+    "test": "react-scripts test",
+    "test:coverage": "yarn test --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@testing-library/dom": "^7.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -27,7 +29,7 @@
     "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.0",
     "react-smooth-collapse": "^2.1.0",
     "typescript": "~3.7.2"
   },

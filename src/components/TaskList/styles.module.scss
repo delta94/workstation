@@ -73,10 +73,6 @@
     }
   }
 
-  &:hover {
-    background-color: var(--secondary100);
-  }
-
   &:hover:not(.is-disabled) {
     color: var(--primary);
   }
