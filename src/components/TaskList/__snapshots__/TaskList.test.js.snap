@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskList renders correctly renders correctly 1`] = `
+<div>
+  <div
+    class="progress-bar"
+  >
+    <div
+      class="title"
+    >
+      80
+      % completed
+    </div>
+    <div
+      class="progress-bar-indicator"
+    />
+  </div>
+  <ul
+    class="task-list"
+  >
+    <li
+      class="task-item"
+    >
+      <svg
+        class="icon"
+      >
+        taskCheckbox.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Not completed
+      </span>
+    </li>
+    <li
+      class="task-item"
+    >
+      <svg
+        class="icon"
+      >
+        taskCheckbox.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Not completed
+      </span>
+    </li>
+    <li
+      class="task-item"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - not crossed off, not disabled
+      </span>
+    </li>
+    <li
+      class="task-item"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - not crossed off, not disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-crossed-off"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - crossed off, not disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-crossed-off"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - crossed off, not disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-crossed-off is-disabled"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - crossed off, disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-crossed-off is-disabled"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - crossed off, disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-disabled"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - not crossed off, disabled
+      </span>
+    </li>
+    <li
+      class="task-item is-disabled"
+    >
+      <svg
+        class="icon"
+      >
+        taskDone.svg
+      </svg>
+      <span
+        class="title"
+      >
+        Completed - not crossed off, disabled
+      </span>
+    </li>
+    <li
+      class="task-group last-of-type"
+    >
+      <div
+        class="task-group-title"
+      >
+        <svg
+          class="task-group-icon"
+        >
+          taskGroupArrow.svg
+        </svg>
+        Day 1
+      </div>
+      <div
+        class=""
+        style="height: 0px; overflow: hidden; display: none; transition: height .25s ease;"
+      />
+    </li>
+  </ul>
+</div>
+`;

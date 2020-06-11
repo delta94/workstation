@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HelpList renders correctly should render correctly 1`] = `
+<div>
+  <ul
+    class="help-list"
+  >
+    <li
+      class="help-item"
+    >
+      <div
+        class="help-list-icon"
+      >
+        <svg
+          class="help-icon"
+        >
+          Walkthru.svg
+        </svg>
+      </div>
+      <div
+        class="help-item-text"
+      >
+        <div
+          class="title"
+        >
+          Content smart-walkthru-280
+        </div>
+        <div
+          class="description"
+        >
+          Description for smart-walkthru-280
+        </div>
+      </div>
+    </li>
+    <li
+      class="help-item"
+    >
+      <div
+        class="help-list-icon"
+      >
+        <svg
+          class="help-icon"
+        >
+          Survey.svg
+        </svg>
+      </div>
+      <div
+        class="help-item-text"
+      >
+        <div
+          class="title"
+        >
+          Content survey-777
+        </div>
+        <div
+          class="description"
+        >
+          Description for survey-777
+        </div>
+      </div>
+    </li>
+    <li
+      class="help-item"
+    >
+      <div
+        class="help-list-icon"
+      >
+        <svg
+          class="help-icon"
+        >
+          Shuttle.svg
+        </svg>
+      </div>
+      <div
+        class="help-item-text"
+      >
+        <div
+          class="title"
+        >
+          Content shuttle-27
+        </div>
+        <div
+          class="description"
+        >
+          Description for shuttle-27
+        </div>
+        <div
+          class="url"
+        >
+          https://27.example.com/index?t=599
+        </div>
+      </div>
+    </li>
+    <li
+      class="help-item"
+    >
+      <div
+        class="help-list-icon"
+      >
+        <svg
+          class="help-icon"
+        >
+          Video.svg
+        </svg>
+      </div>
+      <div
+        class="help-item-text"
+      >
+        <div
+          class="title"
+        >
+          Content video-981
+        </div>
+        <div
+          class="description"
+        >
+          Description for video-981
+        </div>
+      </div>
+    </li>
+    <li
+      class="help-item"
+    >
+      <div
+        class="help-list-icon"
+      >
+        <svg
+          class="help-icon"
+        >
+          Article.svg
+        </svg>
+      </div>
+      <div
+        class="help-item-text"
+      >
+        <div
+          class="title"
+        >
+          Content article-723
+        </div>
+        <div
+          class="description"
+        >
+          Description for article-723
+        </div>
+      </div>
+    </li>
+    <li
+      class="help-group last-of-type"
+    >
+      <div
+        class="help-group-title"
+      >
+        <svg
+          class="folder-icon help-list-icon"
+        >
+          Category.svg
+        </svg>
+        <span>
+          Category
+        </span>
+      </div>
+      <div
+        class=""
+        style="height: 0px; overflow: hidden; display: none; transition: height .25s ease;"
+      />
+    </li>
+  </ul>
+</div>
+`;

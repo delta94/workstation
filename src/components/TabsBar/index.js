@@ -48,7 +48,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
   }, [tabIndex]);
 
   return (
-    <section className={classes.tabs}>
+    <section className={classes.tabs} data-testid="tabs-bar">
       <ul className={classes['tabs-list']}>
         {tabs.map((tab, index) => {
           const TabIcon = iconsArray[index];
