@@ -9,6 +9,8 @@ import NoData from '../StateScreens/NoData';
 
 import classes from './styles.module.scss';
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
+import walkme from '@walkme/sdk';
+import cc from 'classcat';
 
 const contentTypeToComponentDictionary = {
   help: TabsContent,
@@ -32,6 +34,7 @@ function Layout() {
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
   const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
   const contentSection = useRef(null);
+  const isWindows = walkme.platformType === walkme.platform?.PlatformTypes.Windows;
 
   function onSetActiveSection(newActiveSection) {
     const changeSearchTerm = newActiveSection.contentType === 'search' && activeSection.contentType === 'search';
@@ -64,17 +67,22 @@ function Layout() {
   }, [activeSection]);
 
   return (
-    <>
+    <div className={cc([{ [classes['platform-windows']]: isWindows }])}>
       <Header
         onSelectSection={onSetActiveSection}
         onDeselectSection={onDeselectActiveSection}
         activeSection={activeSection}
       />
-      <TabsBar path={activeSection.path} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
+      <TabsBar
+        path={activeSection.path}
+        onSelectSection={onSetActiveSection}
+        isActive={tabsAreActive}
+        tabsUnderlineOffset={isWindows ? 10 : 0}
+      />
       <section ref={contentSection} className={classes.content}>
         <ContentComponent path={activeSection.path} onDeselectSection={onDeselectActiveSection} />
       </section>
-    </>
+    </div>
   );
 }
 

@@ -10,7 +10,7 @@ import classes from './styles.module.scss';
 
 const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
-export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive }) {
+export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive, tabsUnderlineOffset }) {
   const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
@@ -25,7 +25,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
       clearUnderlineSize();
     } else {
       const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
-      setUnderlineSize({ width, left });
+      setUnderlineSize({ width, left: left - tabsUnderlineOffset });
     }
   }
 
