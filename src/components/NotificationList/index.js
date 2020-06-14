@@ -13,6 +13,11 @@ import classes from './styles.module.scss';
 export default function NotificationList() {
   const { wmNotifications, notifications } = useContext(WalkmeSDKContext);
 
+  function parseDate(date) {
+    const parsedDate = typeof date === 'string' ? parseISO(date) : date;
+    return format(parsedDate, 'd.M.y | h:mma');
+  }
+
   return (
     <>
       {notifications?.length ? (
@@ -30,7 +35,7 @@ export default function NotificationList() {
                 </div>
                 <div>
                   <div className={classes.title}>{node.title}</div>
-                  <div className={classes.date}>{format(parseISO(node.properties.date), 'd.M.y | h:mma')}</div>
+                  <div className={classes.date}>{parseDate(node.properties.date)}</div>
                 </div>
               </li>
             ))}
