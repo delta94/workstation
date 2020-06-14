@@ -55,9 +55,6 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   }
 
   async function handleBeforeOpen() {
-    setLoading(true);
-    setError(false);
-
     try {
       await getAppData();
       setLoading(false);
@@ -72,7 +69,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     setError(false);
     setTimeout(() => {
       setLoading(true);
-    }, 200);
+    }, 100);
   }
 
   function setAppListeners() {
