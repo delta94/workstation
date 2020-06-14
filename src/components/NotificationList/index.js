@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import format from 'date-fns/format';
-import parseISO from 'date-fns/parseISO';
 import cc from 'classcat';
 
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
@@ -14,7 +13,7 @@ export default function NotificationList() {
   const { wmNotifications, notifications } = useContext(WalkmeSDKContext);
 
   function parseDate(date) {
-    const parsedDate = typeof date === 'string' ? parseISO(date) : date;
+    const parsedDate = new Date(Date.parse(date));
     return format(parsedDate, 'd.M.y | h:mma');
   }
 
