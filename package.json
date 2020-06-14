@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
+    "start:workstation": "cross-env PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "postbuild": "rm -rf dist && mv build dist",
     "test": "react-scripts test",
@@ -65,5 +66,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://cdn.walkme.com/apps/new-workstation"
+  "homepage": "https://cdn.walkme.com/apps/new-workstation",
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
 }
