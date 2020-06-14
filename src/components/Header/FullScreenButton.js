@@ -3,7 +3,7 @@ import walkme from '@walkme/sdk';
 
 import IconButton from '../IconButton';
 
-import { ReactComponent as FullscreenIcon } from './icons/fullscreen.svg';
+import MinimizeIcon from './icons/MinimizeIcon';
 import classes from './styles.module.scss';
 
 export default function FullScreenButton() {
@@ -13,7 +13,7 @@ export default function FullScreenButton() {
 
   return (
     <IconButton className={classes['icon-button']} onClick={onMinimizeClick}>
-      <FullscreenIcon />
+      <MinimizeIcon />
     </IconButton>
   );
 }

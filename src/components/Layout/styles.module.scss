@@ -1,3 +1,11 @@
+.platform-windows {
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  overflow: hidden;
+  margin: 0 0 0 10px;
+  width: calc(100% - 10px);
+}
+
 .content {
   height: calc(100vh - 90px - 80px);
   overflow: auto;

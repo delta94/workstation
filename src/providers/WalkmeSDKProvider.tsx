@@ -55,14 +55,24 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   }
 
   async function handleBeforeOpen() {
-    await getAppData();
-    setLoading(false);
+    setLoading(true);
     setError(false);
+
+    try {
+      await getAppData();
+      setLoading(false);
+      setError(false);
+    } catch (error) {
+      setLoading(false);
+      setError(true);
+    }
   }
 
   function handleBeforeClose() {
-    setLoading(true);
     setError(false);
+    setTimeout(() => {
+      setLoading(true);
+    }, 200);
   }
 
   function setAppListeners() {
