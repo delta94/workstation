@@ -60,12 +60,21 @@
   .icon-button {
     flex-shrink: 0;
 
-    &:not(:last-of-type) {
+    &:not(:last-child) {
       margin-right: 3px;
     }
 
     &:hover {
       color: var(--primary);
+
+      .minimize-icon {
+        .right {
+          transform: translate(0.5px, -0.5px);
+        }
+        .left {
+          transform: translate(-0.5px, 0.5px);
+        }
+      }
     }
   }
 
@@ -85,5 +94,20 @@
     &:not(.is-active):hover::after {
       top: 0;
     }
+  }
+}
+
+.minimize-icon {
+  .right,
+  .left {
+    transition: transform 200ms ease;
+  }
+
+  .right {
+    transform: translate(0);
+  }
+
+  .left {
+    transform: translate(0);
   }
 }

@@ -14,7 +14,7 @@ export default function HeaderMenuButton() {
   useClickOutside(menuRef, () => setIsMenuOpen(false));
 
   return (
-    <div ref={menuRef} className={cc([classes['menu-container'], classes['icon-button']])}>
+    <div ref={menuRef} className={cc([classes['menu-container']])}>
       <IconButton className={classes['icon-button']} onClick={() => setIsMenuOpen(!isMenuOpen)}>
         <DotsIcon />
       </IconButton>
