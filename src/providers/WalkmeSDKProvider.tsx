@@ -4,6 +4,8 @@ import walkme from '@walkme/sdk';
 import Loader from '../components/StateScreens/Loader';
 import NoConnection from '../components/StateScreens/NoConnection';
 
+import classes from './styles.module.scss';
+
 type AppPropTypes = { children: React.ReactNode };
 type WalkmeSdkContextTypes = {
   wmSearch: object;
@@ -12,9 +14,31 @@ type WalkmeSdkContextTypes = {
   uiTreeSDK: object;
   tabTypes: object;
   languagesSDK: object;
+  platform: Platform;
+};
+type Platform = {
+  isWindows: boolean;
+  isMac: boolean;
+  isWeb: boolean;
+  isMock: boolean;
+  platform: object;
+  platformTypes: object;
 };
 
 export const WalkmeSDKContext = createContext<WalkmeSdkContextTypes | null>(null);
+
+function getPlatform(): Platform {
+  const { Windows, Mac, Web, Mock } = (walkme as any).platform?.PlatformTypes ?? {};
+
+  return {
+    isWindows: (walkme as any).platformType === Windows,
+    isMac: (walkme as any).platformType === Mac,
+    isWeb: (walkme as any).platformType === Web,
+    isMock: (walkme as any).platformType === Mock,
+    platform: walkme as any,
+    platformTypes: (walkme as any).platform?.PlatformTypes,
+  };
+}
 
 export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   const [sdk, setSdk] = useState<WalkmeSdkContextTypes | null>(null);
@@ -23,6 +47,8 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
 
   function getChildren(): React.ReactNode {
     switch (true) {
+      case !sdk:
+        return <div style={{ height: '100vh', backgroundColor: 'var(--background)' }} />;
       case loading:
         return <Loader style={{ height: '100vh' }} />;
       case error:
@@ -51,6 +77,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
       uiTreeSDK,
       tabTypes,
       languagesSDK,
+      platform: getPlatform(),
     });
   }
 
@@ -98,5 +125,9 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     })();
   }, []);
 
-  return <WalkmeSDKContext.Provider value={sdk}>{getChildren()}</WalkmeSDKContext.Provider>;
+  return (
+    <WalkmeSDKContext.Provider value={sdk}>
+      {sdk?.platform.isWindows ? <div className={classes['platform-windows']}>{getChildren()}</div> : getChildren()}
+    </WalkmeSDKContext.Provider>
+  );
 }

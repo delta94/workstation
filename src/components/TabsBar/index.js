@@ -10,11 +10,15 @@ import classes from './styles.module.scss';
 
 const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
-export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive, tabsUnderlineOffset }) {
-  const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
+export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive }) {
+  const {
+    uiTreeSDK: tabs,
+    platform: { isWindows },
+  } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
+  const tabsUnderlineOffset = !!isWindows ? 10 : 0;
 
   function clearUnderlineSize() {
     setUnderlineSize({ width: 0, left: 0 });

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 
 import WalkmeSDKProvider from './providers/WalkmeSDKProvider';
-import Layout from './components/Layout';
 
-import './App.css';
+import Layout from './components/Layout';
 
 function App() {
   function addGuidSpecificStyle() {
@@ -23,9 +22,7 @@ function App() {
 
   return (
     <WalkmeSDKProvider>
-      <div className="App">
-        <Layout />
-      </div>
+      <Layout />
     </WalkmeSDKProvider>
   );
 }
