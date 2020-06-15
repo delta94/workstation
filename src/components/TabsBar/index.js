@@ -31,7 +31,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
     }
   }
 
-  function updateUnderlineSizeOnResize() {
+  function updateUnderlineSizeOnResize(localTabIndex) {
     // When the app is opened for the first time it was already rendered in a "closed" window
     // so the underline is mistakenly measured as 2px
     if (isEmpty(tabRefs.current[localTabIndex])) {
@@ -58,13 +58,20 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
     updateUnderlineSize(localTabIndex);
   }, [isActive]);
 
+  // listen to window resize - this helps show the underline when the app loads
+  // see updateUnderlineSizeOnResize() for more info
+  const boundUpdateUnderlineSizeOnResize = updateUnderlineSizeOnResize.bind(null, localTabIndex);
   useEffect(() => {
-    window.addEventListener('resize', updateUnderlineSizeOnResize.call(localTabIndex));
+    if (isActive) {
+      window.addEventListener('resize', boundUpdateUnderlineSizeOnResize);
+    } else {
+      window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateUnderlineSizeOnResize.call(localTabIndex));
+      window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
     };
-  }, []);
+  }, [localTabIndex, isActive]);
 
   return (
     <section className={classes.tabs} data-testid="tabs-bar">
