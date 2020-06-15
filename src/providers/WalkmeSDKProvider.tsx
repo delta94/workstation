@@ -102,9 +102,6 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   function setAppListeners() {
     const { BeforeOpen, BeforeClose } = (walkme.events as any).EventTypes;
 
-    walkme.events.off(BeforeOpen, handleBeforeOpen);
-    walkme.events.off(BeforeClose, handleBeforeClose);
-
     walkme.events.on(BeforeOpen, handleBeforeOpen);
     walkme.events.on(BeforeClose, handleBeforeClose);
   }
