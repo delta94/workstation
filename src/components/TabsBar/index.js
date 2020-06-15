@@ -1,5 +1,6 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect, useMemo } from 'react';
 import cc from 'classcat';
+import isEmpty from 'lodash/isEmpty';
 
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
@@ -16,21 +17,29 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
     platform: { isWindows },
   } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
+  const [localTabIndex, setLocalTabIndex] = useState(tabIndex);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
-  const tabsUnderlineOffset = !!isWindows ? 10 : 0;
+  const tabsUnderlineOffset = useMemo(() => (!!isWindows ? 10 : 0), [isWindows]);
 
-  function clearUnderlineSize() {
-    setUnderlineSize({ width: 0, left: 0 });
+  function updateUnderlineSize(index = localTabIndex) {
+    if (isActive) {
+      const { width, left } = tabRefs.current[index].getBoundingClientRect();
+      setUnderlineSize({ width, left: left - tabsUnderlineOffset });
+    } else {
+      setUnderlineSize({ width: 0, left: 0 }); // clear underline
+    }
   }
 
-  function updateUnderlineSize(tabIndex) {
-    if (tabIndex === undefined || tabIndex === null) {
-      clearUnderlineSize();
-    } else {
-      const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
-      setUnderlineSize({ width, left: left - tabsUnderlineOffset });
+  function updateUnderlineSizeOnResize() {
+    // When the app is opened for the first time it was already rendered in a "closed" window
+    // so the underline is mistakenly measured as 2px
+    if (isEmpty(tabRefs.current[localTabIndex])) {
+      setTimeout(updateUnderlineSize, 100);
+      return;
     }
+
+    updateUnderlineSize();
   }
 
   function onClickTab(tab, index) {
@@ -40,16 +49,22 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
   }
 
   useEffect(() => {
-    if (!isActive) {
-      clearUnderlineSize();
-    } else {
-      updateUnderlineSize(tabIndex);
+    if (tabIndex !== undefined && tabIndex !== null) {
+      setLocalTabIndex(tabIndex);
     }
+  }, [tabIndex]);
+
+  useEffect(() => {
+    updateUnderlineSize(localTabIndex);
   }, [isActive]);
 
   useEffect(() => {
-    updateUnderlineSize(tabIndex);
-  }, [tabIndex]);
+    window.addEventListener('resize', updateUnderlineSizeOnResize.call(localTabIndex));
+
+    return () => {
+      window.removeEventListener('resize', updateUnderlineSizeOnResize.call(localTabIndex));
+    };
+  }, []);
 
   return (
     <section className={classes.tabs} data-testid="tabs-bar">
