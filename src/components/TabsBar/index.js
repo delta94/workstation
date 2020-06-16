@@ -1,5 +1,6 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect, useMemo } from 'react';
 import cc from 'classcat';
+import isEmpty from 'lodash/isEmpty';
 
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
@@ -10,23 +11,35 @@ import classes from './styles.module.scss';
 
 const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
-export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive, tabsUnderlineOffset }) {
-  const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
+export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive }) {
+  const {
+    uiTreeSDK: tabs,
+    platform: { isWindows },
+  } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
+  const [localTabIndex, setLocalTabIndex] = useState(tabIndex);
   const [underlineSizes, setUnderlineSize] = useState(undefined);
   const tabRefs = useRef([new Array(tabs.length)]);
+  const tabsUnderlineOffset = useMemo(() => (!!isWindows ? 10 : 0), [isWindows]);
 
-  function clearUnderlineSize() {
-    setUnderlineSize({ width: 0, left: 0 });
+  function updateUnderlineSize(index = localTabIndex) {
+    if (isActive) {
+      const { width, left } = tabRefs.current[index].getBoundingClientRect();
+      setUnderlineSize({ width, left: left - tabsUnderlineOffset });
+    } else {
+      setUnderlineSize({ width: 0, left: 0 }); // clear underline
+    }
   }
 
-  function updateUnderlineSize(tabIndex) {
-    if (tabIndex === undefined || tabIndex === null) {
-      clearUnderlineSize();
-    } else {
-      const { width, left } = tabRefs.current[tabIndex].getBoundingClientRect();
-      setUnderlineSize({ width, left: left - tabsUnderlineOffset });
+  function updateUnderlineSizeOnResize(localTabIndex) {
+    // When the app is opened for the first time it was already rendered in a "closed" window
+    // so the underline is mistakenly measured as 2px
+    if (isEmpty(tabRefs.current[localTabIndex])) {
+      setTimeout(updateUnderlineSize, 100);
+      return;
     }
+
+    updateUnderlineSize();
   }
 
   function onClickTab(tab, index) {
@@ -36,16 +49,29 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
   }
 
   useEffect(() => {
-    if (!isActive) {
-      clearUnderlineSize();
-    } else {
-      updateUnderlineSize(tabIndex);
+    if (tabIndex !== undefined && tabIndex !== null) {
+      setLocalTabIndex(tabIndex);
     }
-  }, [isActive]);
+  }, [tabIndex]);
 
   useEffect(() => {
-    updateUnderlineSize(tabIndex);
-  }, [tabIndex]);
+    updateUnderlineSize(localTabIndex);
+  }, [isActive]);
+
+  // listen to window resize - this helps show the underline when the app loads
+  // see updateUnderlineSizeOnResize() for more info
+  const boundUpdateUnderlineSizeOnResize = updateUnderlineSizeOnResize.bind(null, localTabIndex);
+  useEffect(() => {
+    if (isActive) {
+      window.addEventListener('resize', boundUpdateUnderlineSizeOnResize);
+    } else {
+      window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
+    }
+
+    return () => {
+      window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
+    };
+  }, [localTabIndex, isActive]);
 
   return (
     <section className={classes.tabs} data-testid="tabs-bar">
