@@ -24,6 +24,7 @@
     "@walkme/sdk": "^1.0.24-1",
     "classcat": "^4.1.0",
     "date-fns": "^2.14.0",
+    "date-fns-tz": "^1.0.10",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.6",
     "lodash": "^4.17.15",
