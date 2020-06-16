@@ -613,6 +613,14 @@ const sdkProvider = {
       shortName: 'es-es',
     },
   ],
+  platform: {
+    isWindows: false,
+    isMac: false,
+    isWeb: true,
+    isMock: false,
+    platform: 'Web',
+    platformTypes: ['Windows', 'Mac', 'Web', 'Mock'],
+  },
 };
 
 export { sdkProvider };
