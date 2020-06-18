@@ -14,65 +14,67 @@ const contentTypeToComponentDictionary = {
   help: TabsContent,
   tasks: TabsContent,
   notifications: NotificationList,
-  search: ({ path, onDeselectSection }) => (
-    <SearchResults searchTerm={path.searchTerm} onDeselectSection={onDeselectSection} />
+  search: ({ location, onDeselectSection }) => (
+    <SearchResults searchTerm={location.searchTerm} onDeselectSection={onDeselectSection} />
   ),
   undefined: () => <NoData />,
 };
 
 function Layout() {
-  const { uiTreeSDK: tabs, tabTypes } = useContext(WalkmeSDKContext);
-
-  // default starting screen is the first tab
-  const [activeSection, setActiveSection] = useState({
-    contentType: tabs[0].properties.tabType,
-    path: { index: 0 },
-  });
-  const [previousActiveSection, setPreviousActiveSection] = useState({ contentType: undefined, content: undefined });
+  const {
+    state: {
+      sdk: { tabTypes },
+      ui: { location },
+    },
+    dispatch,
+  } = useContext(WalkmeSDKContext);
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
-  const ContentComponent = contentTypeToComponentDictionary[activeSection.contentType];
+  const ContentComponent = contentTypeToComponentDictionary[location.contentType];
   const contentSection = useRef(null);
 
   function onSetActiveSection(newActiveSection) {
-    const changeSearchTerm = newActiveSection.contentType === 'search' && activeSection.contentType === 'search';
+    const changeSearchTerm = newActiveSection.contentType === 'search' && location.contentType === 'search';
+    const newSearchTermIsNotEmpty = newActiveSection.searchTerm !== '';
 
-    if (!changeSearchTerm) {
-      setPreviousActiveSection(activeSection);
-      setActiveSection(newActiveSection);
+    // This happens when first starting to search (on the first letter input) before the app is in the search section,
+    // or for any other section
+    if (!changeSearchTerm && newSearchTermIsNotEmpty) {
+      dispatch({ type: 'updateLocationHistory', location: newActiveSection });
     }
 
+    // This happens after the app is already in the search section
     if (changeSearchTerm) {
-      if (!newActiveSection.path.searchTerm) {
-        setActiveSection(previousActiveSection);
+      if (!newActiveSection.searchTerm) {
+        dispatch({ type: 'toggleLocation' });
       } else {
-        setActiveSection(newActiveSection);
+        dispatch({ type: 'updateLocation', location: newActiveSection });
       }
     }
   }
 
   function onDeselectActiveSection() {
-    setActiveSection(previousActiveSection);
+    dispatch({ type: 'toggleLocation' });
   }
 
   function areTabsActive() {
-    return Object.values(tabTypes).includes(activeSection.contentType);
+    return Object.values(tabTypes).includes(location.contentType);
   }
 
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
     setTabsAreActive(areTabsActive());
-  }, [activeSection]);
+  }, [location]);
 
   return (
     <>
       <Header
         onSelectSection={onSetActiveSection}
         onDeselectSection={onDeselectActiveSection}
-        activeSection={activeSection}
+        activeSection={location}
       />
-      <TabsBar path={activeSection.path} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
+      <TabsBar path={location.index} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <ContentComponent path={activeSection.path} onDeselectSection={onDeselectActiveSection} />
+        <ContentComponent location={location} onDeselectSection={onDeselectActiveSection} />
       </section>
     </>
   );

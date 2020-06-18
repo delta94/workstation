@@ -13,7 +13,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   const [isSearchFocus, setIsSearchFocus] = useState(false);
 
   function onSearchTermChange(searchTerm) {
-    onSelectSection({ contentType: 'search', path: { searchTerm } });
+    onSelectSection({ contentType: 'search', searchTerm });
   }
 
   return (
