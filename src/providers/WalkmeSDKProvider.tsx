@@ -1,13 +1,15 @@
 import React, { createContext, useEffect, useReducer } from 'react';
+import walkme from '@walkme/sdk';
 // @ts-ignore
 import cloneDeep from 'lodash/cloneDeep';
-import walkme from '@walkme/sdk';
 
 import Loader from '../components/StateScreens/Loader';
 import NoConnection from '../components/StateScreens/NoConnection';
 
 import { AppPropTypes, Platform, WalkmeSdk, WalkmeSdkContextValue, Action, AppState } from './types';
 import classes from './styles.module.scss';
+
+const FETCH_RETRY_AMOUNT = 3;
 
 const initialState: AppState = {
   sdk: {
@@ -34,6 +36,7 @@ function reducer(state: AppState, action: Action): AppState {
     case 'updateSdkSuccess':
       return { ...draft, sdk: action.sdk, ui: { ...draft.ui, loading: false, error: false } };
     case 'updateSdkError':
+      console.error(action.error);
       return { ...draft, ui: { ...draft.ui, loading: false, error: true } };
     case 'initLocation':
       return { ...draft, ui: { ...draft.ui, location: action.location, previousLocation: action.location } };
@@ -68,6 +71,25 @@ function getPlatform(): Platform {
   };
 }
 
+async function getNotifications(wmNotifications: any, getNotificationsCount: number = 0): Promise<any> {
+  let count = getNotificationsCount;
+  try {
+    return await wmNotifications.getNotifications();
+  } catch (error) {
+    if (count < FETCH_RETRY_AMOUNT) {
+      count += 1;
+      return await getNotifications(wmNotifications, count);
+    } else {
+      throw new Error('Failed to get notifications ' + error);
+    }
+  }
+}
+
+async function getNotificationsRecursively(wmNotifications: any): Promise<any> {
+  const getNotificationsCount = 0;
+  return getNotifications(wmNotifications, getNotificationsCount);
+}
+
 async function getSdk() {
   const [wmSearch, wmNotifications, uiTreeSDK, languagesSDK] = await Promise.all([
     walkme.apps.getApp('search'),
@@ -75,7 +97,9 @@ async function getSdk() {
     walkme.content.getContentUITree(),
     walkme.language.getLanguagesList(),
   ]);
-  const notifications = await wmNotifications.getNotifications();
+
+  const notifications = await getNotificationsRecursively(wmNotifications);
+
   const tabTypes = (walkme.content as any).TabTypes;
 
   return {
@@ -116,7 +140,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
       const sdk = await getSdk();
       dispatch({ type: 'updateSdkSuccess', sdk });
     } catch (error) {
-      dispatch({ type: 'updateSdkError' });
+      dispatch({ type: 'updateSdkError', error });
     }
   }
 
@@ -141,7 +165,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
         dispatch({ type: 'updateSdkSuccess', sdk });
         setAppListeners();
       } catch (error) {
-        dispatch({ type: 'updateSdkError' });
+        dispatch({ type: 'updateSdkError', error });
       }
     })();
   }, []);
