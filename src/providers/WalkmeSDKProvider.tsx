@@ -1,60 +1,21 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import walkme from '@walkme/sdk';
-// @ts-ignore
-import cloneDeep from 'lodash/cloneDeep';
 
 import Loader from '../components/StateScreens/Loader';
 import NoConnection from '../components/StateScreens/NoConnection';
 
-import { AppPropTypes, Platform, WalkmeSdk, WalkmeSdkContextValue, Action, AppState } from './types';
+import { AppPropTypes, Platform, WalkmeSdk, WalkmeSdkContextValue } from './types';
+import reducer, {
+  HANDLE_BEFORE_CLOSE,
+  INIT_LOCATION,
+  initialState,
+  UPDATE_SDK,
+  UPDATE_SDK_ERROR,
+  UPDATE_SDK_SUCCESS,
+} from './reducer';
 import classes from './styles.module.scss';
 
 const FETCH_RETRY_AMOUNT = 3;
-
-const initialState: AppState = {
-  sdk: {
-    wmSearch: {},
-    wmNotifications: {},
-    notifications: {},
-    uiTreeSDK: {},
-    tabTypes: {},
-    languagesSDK: {},
-    platform: {},
-  },
-  ui: {
-    loading: true,
-    error: false,
-  },
-};
-
-function reducer(state: AppState, action: Action): AppState {
-  const draft = cloneDeep(state);
-
-  switch (action.type) {
-    case 'updateSdk':
-      return { ...draft, ui: { ...draft.ui, loading: true, error: false } };
-    case 'updateSdkSuccess':
-      return { ...draft, sdk: action.sdk, ui: { ...draft.ui, loading: false, error: false } };
-    case 'updateSdkError':
-      console.error(action.error);
-      return { ...draft, ui: { ...draft.ui, loading: false, error: true } };
-    case 'initLocation':
-      return { ...draft, ui: { ...draft.ui, location: action.location, previousLocation: action.location } };
-    case 'updateLocationHistory':
-      return { ...draft, ui: { ...draft.ui, location: action.location, previousLocation: draft.ui.location } };
-    case 'updateLocation':
-      return { ...draft, ui: { ...draft.ui, location: action.location } };
-    case 'toggleLocation':
-      return {
-        ...draft,
-        ui: { ...draft.ui, location: draft.ui.previousLocation, previousLocation: draft.ui.location },
-      };
-    case 'handleBeforeClose':
-      return { ...draft, ui: { ...draft.ui, loading: true, error: false } };
-    default:
-      return state;
-  }
-}
 
 export const WalkmeSDKContext = createContext<WalkmeSdkContextValue | null>(null);
 
@@ -136,16 +97,16 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
 
   async function handleBeforeOpen() {
     try {
-      dispatch({ type: 'updateSdk' });
+      dispatch({ type: UPDATE_SDK });
       const sdk = await getSdk();
-      dispatch({ type: 'updateSdkSuccess', sdk });
+      dispatch({ type: UPDATE_SDK_SUCCESS, sdk });
     } catch (error) {
-      dispatch({ type: 'updateSdkError', error });
+      dispatch({ type: UPDATE_SDK_ERROR, error });
     }
   }
 
   function handleBeforeClose() {
-    dispatch({ type: 'handleBeforeClose' });
+    dispatch({ type: HANDLE_BEFORE_CLOSE });
   }
 
   function setAppListeners() {
@@ -158,14 +119,14 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   useEffect(() => {
     (async function init() {
       try {
-        dispatch({ type: 'updateSdk' });
+        dispatch({ type: UPDATE_SDK });
         const sdk = await getSdk();
         const location = getInitialLocation(sdk);
-        dispatch({ type: 'initLocation', location });
-        dispatch({ type: 'updateSdkSuccess', sdk });
+        dispatch({ type: INIT_LOCATION, location });
+        dispatch({ type: UPDATE_SDK_SUCCESS, sdk });
         setAppListeners();
       } catch (error) {
-        dispatch({ type: 'updateSdkError', error });
+        dispatch({ type: UPDATE_SDK_ERROR, error });
       }
     })();
   }, []);

@@ -1,5 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 
+import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
+import { TOGGLE_LOCATION, UPDATE_LOCATION, UPDATE_LOCATION_HISTORY } from '../../providers/reducer';
+
 import Header from '../Header';
 import TabsBar from '../TabsBar';
 import TabsContent from '../TabsContent';
@@ -8,7 +11,6 @@ import NotificationList from '../NotificationList';
 import NoData from '../StateScreens/NoData';
 
 import classes from './styles.module.scss';
-import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 
 const contentTypeToComponentDictionary = {
   help: TabsContent,
@@ -39,21 +41,21 @@ function Layout() {
     // This happens when first starting to search (on the first letter input) before the app is in the search section,
     // or for any other section
     if (!changeSearchTerm && newSearchTermIsNotEmpty) {
-      dispatch({ type: 'updateLocationHistory', location: newActiveSection });
+      dispatch({ type: UPDATE_LOCATION_HISTORY, location: newActiveSection });
     }
 
     // This happens after the app is already in the search section
     if (changeSearchTerm) {
       if (!newActiveSection.searchTerm) {
-        dispatch({ type: 'toggleLocation' });
+        dispatch({ type: TOGGLE_LOCATION });
       } else {
-        dispatch({ type: 'updateLocation', location: newActiveSection });
+        dispatch({ type: UPDATE_LOCATION, location: newActiveSection });
       }
     }
   }
 
   function onDeselectActiveSection() {
-    dispatch({ type: 'toggleLocation' });
+    dispatch({ type: TOGGLE_LOCATION });
   }
 
   function areTabsActive() {
