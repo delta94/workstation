@@ -1,9 +1,7 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import walkme from '@walkme/sdk';
 import cc from 'classcat';
 import SmoothCollapse from 'react-smooth-collapse';
-
-import useClickOutside from '../../hooks/useClickOutside';
 
 import { ReactComponent as LanguagesIcon } from './icons/languages.svg';
 import { ReactComponent as LogOutIcon } from './icons/log-out.svg';
@@ -12,7 +10,7 @@ import { ReactComponent as CollapseArrowIcon } from './icons/collapseArrow.svg';
 
 import classes from './styles.module.scss';
 
-export default function HeaderMenu({ setIsOpen, className = '' }) {
+export default function HeaderMenu({ className = '' }) {
   const [isLanguagesExpanded, setIsLanguagesExpanded] = useState(true);
   const languages = useMemo(() => walkme.language.languages);
   const showLogout = useMemo(() => walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP);
@@ -50,10 +48,10 @@ export default function HeaderMenu({ setIsOpen, className = '' }) {
                 {languages.map((language) => (
                   <li
                     className={classes.title}
-                    key={language.shortName ?? 'default'}
-                    onClick={() => selectLanguage(language.shortName)}
+                    key={language.shortName ?? language.ShortName ?? 'default'}
+                    onClick={() => selectLanguage(language.shortName ?? language.ShortName)}
                   >
-                    {language.displayName}
+                    {language.displayName ?? language.DisplayName}
                   </li>
                 ))}
               </ul>
