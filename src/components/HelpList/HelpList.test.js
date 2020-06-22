@@ -6,7 +6,7 @@ import HelpList from './index';
 
 describe('HelpList renders correctly', () => {
   test('should render correctly', () => {
-    const { container } = render(<HelpList content={sdkProvider.uiTreeSDK[0].childNodes} />);
+    const { container } = render(<HelpList content={sdkProvider.state.sdk.uiTreeSDK[0].childNodes} />);
     expect(container).toMatchSnapshot();
   });
 });

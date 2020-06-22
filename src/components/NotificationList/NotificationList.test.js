@@ -14,7 +14,7 @@ describe('NotificationList renders correctly', () => {
     const originalTimeZone = 'Asia/Jerusalem';
     const draftSdkProvider = cloneDeep(sdkProvider);
 
-    draftSdkProvider.notifications.forEach((notification) => {
+    draftSdkProvider.state.sdk.notifications.forEach((notification) => {
       const date = new Date(notification.properties.date);
       const zonedDate = utcToZonedTime(date, originalTimeZone);
       notification.properties.date = zonedDate;

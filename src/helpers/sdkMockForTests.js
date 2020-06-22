@@ -101,7 +101,7 @@ const searchResults = [
   },
 ];
 
-const sdkProvider = {
+const sdk = {
   wmSearch: {
     userGuid: '0854dff97dca4aa18d85358b00cd9593',
     enduserGuid: 'user@walkme.com',
@@ -620,6 +620,24 @@ const sdkProvider = {
     isMock: false,
     platform: 'Web',
     platformTypes: ['Windows', 'Mac', 'Web', 'Mock'],
+  },
+};
+
+const sdkProvider = {
+  state: {
+    sdk,
+    ui: {
+      location: {
+        contentType: 'help',
+        index: 0,
+      },
+      previousLocation: {
+        contentType: 'help',
+        index: 0,
+      },
+      loading: false,
+      error: false,
+    },
   },
 };
 

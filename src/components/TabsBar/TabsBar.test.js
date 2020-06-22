@@ -10,7 +10,7 @@ describe('TabsBar renders correctly', () => {
   test('should render correctly', async () => {
     const { container } = render(
       <WalkmeSDKContext.Provider value={sdkProvider}>
-        <TabsBar path={{ index: 0 }} isActive />
+        <TabsBar path={{ index: 0 }} isActive={false} />
       </WalkmeSDKContext.Provider>
     );
 
