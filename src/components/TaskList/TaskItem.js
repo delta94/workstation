@@ -22,7 +22,7 @@ export default function TaskItem({ node }) {
           [classes['is-disabled']]: node.properties.isDisabled,
         },
       ])}
-      {...(!node.properties.isCompleted && (onClick = { onClick }))}
+      {...(!node.properties.isDisabled && { onClick })}
     >
       {node.properties.isCompleted ? <TaskDone className={classes.icon} /> : <TaskCheckbox className={classes.icon} />}
       <span className={classes.title}>{node.title}</span>

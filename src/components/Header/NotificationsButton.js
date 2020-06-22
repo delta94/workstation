@@ -8,7 +8,11 @@ import { ReactComponent as NotificationsIcon } from './icons/notifications.svg';
 import classes from './styles.module.scss';
 
 export default function NotificationsButton({ onSelectSection, onDeselectSection, activeSection }) {
-  const { notifications } = useContext(WalkmeSDKContext);
+  const {
+    state: {
+      sdk: { notifications },
+    },
+  } = useContext(WalkmeSDKContext);
 
   const [hasNotifications, setHasNotifications] = useState(false);
   const [isShowingNotifications, setIsShowingNotifications] = useState(false);

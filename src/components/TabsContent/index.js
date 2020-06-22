@@ -11,13 +11,17 @@ const contentTypeToComponentDictionary = {
   undefined: () => <div>Error loading tab</div>,
 };
 
-export default function TabsContent({ path, path: { index: tabIndex } = {} }) {
-  const { uiTreeSDK: tabs } = useContext(WalkmeSDKContext);
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+export default function TabsContent({ location: { index: tabIndex } }) {
+  const {
+    state: {
+      sdk: { uiTreeSDK: tabs },
+    },
+  } = useContext(WalkmeSDKContext);
+  const [activeTab, setActiveTab] = useState(tabs[tabIndex]);
 
   useEffect(() => {
     setActiveTab(tabs[tabIndex]);
-  }, [tabIndex]);
+  }, [tabIndex, tabs]);
 
   const ListTypeComponent = contentTypeToComponentDictionary[activeTab.properties.tabType];
   return <ListTypeComponent content={activeTab.childNodes} />;

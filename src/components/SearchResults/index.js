@@ -13,7 +13,11 @@ import { ReactComponent as BackArrowIcon } from './back-arrow.svg';
 import classes from './styles.module.scss';
 
 export default function SearchResults({ searchTerm, onDeselectSection }) {
-  const { uiTreeSDK: uiTree, wmSearch } = useContext(WalkmeSDKContext);
+  const {
+    state: {
+      sdk: { uiTreeSDK: uiTree, wmSearch },
+    },
+  } = useContext(WalkmeSDKContext);
   const [uiTreeResults, setUiTreeResults] = useState(undefined);
   const [apiSearchResults, setApiSearchResults] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +30,7 @@ export default function SearchResults({ searchTerm, onDeselectSection }) {
       setUiTreeResults(findInUiTree(searchTerm, uiTree));
       setIsLoading(false);
     })();
-  }, [searchTerm]);
+  }, [searchTerm, uiTree, wmSearch]);
 
   const noSearchResults = !uiTreeResults?.length && !apiSearchResults?.length && !isLoading;
   return (
@@ -43,7 +47,7 @@ export default function SearchResults({ searchTerm, onDeselectSection }) {
           <ul className={classes['search-results-list']}>
             {uiTreeResults?.map((node) => {
               const Component = node.type === 'task' ? TaskItem : HelpItem;
-              return <Component node={node} key={node.id} />;
+              return <Component node={node} key={`${node.type}-${node.id}`} />;
             })}
             {apiSearchResults?.map((node, index) => {
               return <SearchResultItem node={node} key={index} />;

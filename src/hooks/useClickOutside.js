@@ -1,5 +1,5 @@
 //https://stackoverflow.com/a/42234988
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function useClickOutside(ref, callback) {
   useEffect(() => {

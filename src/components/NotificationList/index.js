@@ -10,7 +10,11 @@ import { ReactComponent as BellIcon } from './bell.svg';
 import classes from './styles.module.scss';
 
 export default function NotificationList() {
-  const { wmNotifications, notifications } = useContext(WalkmeSDKContext);
+  const {
+    state: {
+      sdk: { wmNotifications, notifications },
+    },
+  } = useContext(WalkmeSDKContext);
 
   function parseDate(date) {
     const parsedDate = new Date(Date.parse(date));

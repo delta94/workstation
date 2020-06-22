@@ -11,10 +11,14 @@ import classes from './styles.module.scss';
 
 const iconsArray = [AssistantHome, OngoingTasks, Bookmarks];
 
-export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSection, isActive }) {
+export default function TabsBar({ path: tabIndex, onSelectSection, isActive }) {
   const {
-    uiTreeSDK: tabs,
-    platform: { isWindows },
+    state: {
+      sdk: {
+        uiTreeSDK: tabs,
+        platform: { isWindows },
+      },
+    },
   } = useContext(WalkmeSDKContext);
   const [activeTab, setActiveTab] = useState(undefined);
   const [localTabIndex, setLocalTabIndex] = useState(tabIndex);
@@ -45,7 +49,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
   function onClickTab(tab, index) {
     setActiveTab(tab);
     updateUnderlineSize(index);
-    onSelectSection({ path: { index }, contentType: tabs[index].properties.tabType });
+    onSelectSection({ contentType: tabs[index].properties.tabType, index });
   }
 
   useEffect(() => {
@@ -56,7 +60,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
 
   useEffect(() => {
     updateUnderlineSize(localTabIndex);
-  }, [isActive]);
+  }, [isActive, localTabIndex]);
 
   // listen to window resize - this helps show the underline when the app loads
   // see updateUnderlineSizeOnResize() for more info
@@ -71,7 +75,7 @@ export default function TabsBar({ path: { index: tabIndex } = {}, onSelectSectio
     return () => {
       window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
     };
-  }, [localTabIndex, isActive]);
+  }, [isActive, boundUpdateUnderlineSizeOnResize]);
 
   return (
     <section className={classes.tabs} data-testid="tabs-bar">

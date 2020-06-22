@@ -3,4 +3,5 @@
   width: var(--logoWidth);
   height: var(--logoHeight);
   background-size: var(--logoWidth) var(--logoHeight);
+  filter: drop-shadow(0 0 3px #00000050);
 }
