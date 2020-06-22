@@ -6,7 +6,7 @@ import TaskList from './index';
 
 describe('TaskList renders correctly', () => {
   test('renders correctly', () => {
-    const { container } = render(<TaskList content={sdkProvider.uiTreeSDK[1].childNodes} />);
+    const { container } = render(<TaskList content={sdkProvider.state.sdk.uiTreeSDK[1].childNodes} />);
     expect(container).toMatchSnapshot();
   });
 });
