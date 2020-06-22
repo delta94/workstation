@@ -21,7 +21,7 @@ export default function TabsContent({ location: { index: tabIndex } }) {
 
   useEffect(() => {
     setActiveTab(tabs[tabIndex]);
-  }, [tabIndex]);
+  }, [tabIndex, tabs]);
 
   const ListTypeComponent = contentTypeToComponentDictionary[activeTab.properties.tabType];
   return <ListTypeComponent content={activeTab.childNodes} />;

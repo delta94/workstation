@@ -60,7 +60,7 @@ export default function TabsBar({ path: tabIndex, onSelectSection, isActive }) {
 
   useEffect(() => {
     updateUnderlineSize(localTabIndex);
-  }, [isActive]);
+  }, [isActive, localTabIndex]);
 
   // listen to window resize - this helps show the underline when the app loads
   // see updateUnderlineSizeOnResize() for more info
@@ -75,7 +75,7 @@ export default function TabsBar({ path: tabIndex, onSelectSection, isActive }) {
     return () => {
       window.removeEventListener('resize', boundUpdateUnderlineSizeOnResize);
     };
-  }, [isActive]);
+  }, [isActive, boundUpdateUnderlineSizeOnResize]);
 
   return (
     <section className={classes.tabs} data-testid="tabs-bar">

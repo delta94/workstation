@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import walkme from '@walkme/sdk';
 import cc from 'classcat';
 import SmoothCollapse from 'react-smooth-collapse';
@@ -12,8 +12,8 @@ import classes from './styles.module.scss';
 
 export default function HeaderMenu({ className = '' }) {
   const [isLanguagesExpanded, setIsLanguagesExpanded] = useState(true);
-  const languages = useMemo(() => walkme.language.languages);
-  const showLogout = useMemo(() => walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP);
+  const languages = walkme.language.languages;
+  const showLogout = walkme.settings.getEndUserSettings().method === walkme.settings.EndUserMethods.IDP;
 
   function toggleDropDown() {
     setIsLanguagesExpanded(!isLanguagesExpanded);

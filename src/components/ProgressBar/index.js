@@ -7,7 +7,7 @@ export default function ProgressBar({ percent }) {
 
   useEffect(() => {
     setCompletedPercent(percent);
-  }, []);
+  }, [percent]);
 
   return (
     <div className={classes['progress-bar']}>

@@ -30,7 +30,7 @@ export default function SearchResults({ searchTerm, onDeselectSection }) {
       setUiTreeResults(findInUiTree(searchTerm, uiTree));
       setIsLoading(false);
     })();
-  }, [searchTerm]);
+  }, [searchTerm, uiTree, wmSearch]);
 
   const noSearchResults = !uiTreeResults?.length && !apiSearchResults?.length && !isLoading;
   return (
