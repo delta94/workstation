@@ -21,7 +21,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "@walkme/sdk": "^1.0.24-1",
+    "@walkme/sdk": "^1.0.24",
     "classcat": "^4.1.0",
     "date-fns": "^2.14.0",
     "date-fns-tz": "^1.0.10",
