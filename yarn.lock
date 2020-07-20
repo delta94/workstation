@@ -1743,10 +1743,10 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
-"@walkme/sdk@^1.0.24-1":
-  version "1.0.24-1"
-  resolved "https://registry.yarnpkg.com/@walkme/sdk/-/sdk-1.0.24-1.tgz#2d5929517e0d0067e77e560a9a75042452a5c1b7"
-  integrity sha512-/edaiQy3aZjzBr4zwJ3Yc3Zrn1mRw7bLDYV+JqCt9jQ/DXZPgCmIDSgoTIxaipDn9nG+CHQPmVWFR93KtdzqcQ==
+"@walkme/sdk@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@walkme/sdk/-/sdk-1.0.24.tgz#addd8b8d0b8f1872cb1f46c198a9646a95d2fb10"
+  integrity sha512-Q8s0+XzgReayEZxB1jgeMHflM1GBUSDwolFqEFDIJCsJYdYR6Ej7SqqU1U9KYHg7iiPYDWLBAtwnP1TVHS5Cxg==
   dependencies:
     comlink "^4.2.0"
 
@@ -6941,10 +6941,10 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-"lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5, lodash@~4.17.12:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+"lodash@>=3.5 <5", lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.5, lodash@~4.17.12:
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^4.0.0:
   version "4.0.0"
