@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 import { TOGGLE_LOCATION, UPDATE_LOCATION, UPDATE_LOCATION_HISTORY } from '../../providers/reducer';
 
@@ -11,6 +10,7 @@ import NotificationList from '../NotificationList';
 import NoData from '../StateScreens/NoData';
 
 import classes from './styles.module.scss';
+import ActionBotLayout from '../ActionBotLayout';
 
 const contentTypeToComponentDictionary = {
   help: TabsContent,
@@ -31,6 +31,7 @@ function Layout() {
     dispatch,
   } = useContext(WalkmeSDKContext);
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
+  const [wasActionBotLoaded, setActionBotLoaded] = useState(false);
   const ContentComponent = contentTypeToComponentDictionary[location.contentType];
   const contentSection = useRef(null);
 
@@ -67,6 +68,18 @@ function Layout() {
     setTabsAreActive(areTabsActive());
   }, [location]);
 
+  if (!wasActionBotLoaded && location.contentType === 'action-bot') {
+    setActionBotLoaded(true);
+  }
+
+  const ActionBot = (wasActionBotLoaded || location.contentType === 'action-bot') && (
+    <ActionBotLayout
+      className={location.contentType !== 'action-bot' ? 'invisible' : ''}
+      location={location}
+      onDeselectSection={onDeselectActiveSection}
+    />
+  );
+
   return (
     <>
       <Header
@@ -76,7 +89,8 @@ function Layout() {
       />
       <TabsBar path={location.index} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <ContentComponent location={location} onDeselectSection={onDeselectActiveSection} />
+        {!!ActionBot && ActionBot}
+        {!!ContentComponent && <ContentComponent location={location} onDeselectSection={onDeselectActiveSection} />}
       </section>
     </>
   );
