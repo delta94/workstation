@@ -101,9 +101,23 @@
       top: 0;
     }
 
-    img {
-      width: 36px;
-      height: 30px;
+    &.is-active {
+      svg {
+        fill: var(--white);
+        stroke: var(--white);
+      }
+    }
+
+    &:not(.is-active):hover {
+      svg {
+        fill: var(--primary);
+        stroke: var(--primary);
+      }
+    }
+
+    svg {
+      fill: var(--secondary500);
+      stroke: var(--secondary500);
     }
   }
 }

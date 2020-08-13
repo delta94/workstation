@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import cc from 'classcat';
 import IconButton from '../IconButton';
-import actionBotImage from './icons/action-bot.png';
 import classes from './styles.module.scss';
+import { ReactComponent as ActionBotIcon } from './icons/action-bot.svg';
 
 export default function ActionBotButton({ onSelectSection, onDeselectSection, activeSection }) {
   const [isShowingActionBot, setIsShowingActionBot] = useState(false);
@@ -27,7 +27,7 @@ export default function ActionBotButton({ onSelectSection, onDeselectSection, ac
         { [classes['is-active']]: isShowingActionBot },
       ])}
     >
-      <img src={actionBotImage} />
+      <ActionBotIcon />
     </IconButton>
   );
 }

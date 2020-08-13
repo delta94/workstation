@@ -22,6 +22,8 @@ const contentTypeToComponentDictionary = {
   undefined: () => <NoData />,
 };
 
+const toggleLocations = ['notifications', 'action-bot'];
+
 function Layout() {
   const {
     state: {
@@ -42,7 +44,8 @@ function Layout() {
     // This happens when first starting to search (on the first letter input) before the app is in the search section,
     // or for any other section
     if (!changeSearchTerm && newSearchTermIsNotEmpty) {
-      dispatch({ type: UPDATE_LOCATION_HISTORY, location: newActiveSection });
+      const dispatchAction = toggleLocations.includes(location.contentType) ? UPDATE_LOCATION : UPDATE_LOCATION_HISTORY;
+      dispatch({ type: dispatchAction, location: newActiveSection });
     }
 
     // This happens after the app is already in the search section
