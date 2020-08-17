@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cc from 'classcat';
 
 import SearchInput from '../SearchInput';
@@ -13,11 +13,13 @@ import walkme from '@walkme/sdk';
 
 export default function Header({ onSelectSection, onDeselectSection, activeSection }) {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
-  const [isActionBotSupported, setIsActionBotSupported] = useState(null);
+  const [shouldShowActionBot, setShouldShowActionBot] = useState(false);
 
-  if (isActionBotSupported === null) {
-    setIsActionBotSupported(getIsActionBotSupported());
-  }
+  useEffect(() => {
+    const actionBotUrl = walkme.apps.getPublicPath('actionBot');
+    const actionBot = walkme.apps.getConfig('actionBot');
+    setShouldShowActionBot(!!(actionBotUrl && actionBot && actionBot.id && !isNaN(actionBot.id)));
+  }, []);
 
   function onSearchTermChange(searchTerm) {
     onSelectSection({ contentType: 'search', searchTerm });
@@ -29,7 +31,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
       <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} onChange={onSearchTermChange} />
       </div>
-      {isActionBotSupported && (
+      {shouldShowActionBot && (
         <ActionBotButton
           onSelectSection={onSelectSection}
           onDeselectSection={onDeselectSection}
@@ -45,10 +47,4 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
       <FullScreenButton />
     </section>
   );
-}
-
-function getIsActionBotSupported() {
-  const actionBotUrl = walkme.apps.getPublicPath('actionBot');
-  const actionBotId = Number(walkme.apps.getConfig('actionBotId'));
-  return !!(actionBotUrl && actionBotId && !isNaN(actionBotId));
 }

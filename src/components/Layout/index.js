@@ -69,11 +69,11 @@ function Layout() {
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
     setTabsAreActive(areTabsActive());
-  }, [location]);
 
-  if (!wasActionBotLoaded && location.contentType === 'action-bot') {
-    setActionBotLoaded(true);
-  }
+    if (!wasActionBotLoaded && location.contentType === 'action-bot') {
+      setActionBotLoaded(true);
+    }
+  }, [location]);
 
   const ActionBot = (wasActionBotLoaded || location.contentType === 'action-bot') && (
     <ActionBotLayout
