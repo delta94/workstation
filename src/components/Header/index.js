@@ -12,9 +12,12 @@ import ActionBotButton from './ActionBotButton';
 import walkme from '@walkme/sdk';
 
 export default function Header({ onSelectSection, onDeselectSection, activeSection }) {
-  const actionBotUrl = walkme.settings.settings?.Components?.actionBot;
-  console.log('actionBotUrl', actionBotUrl);
   const [isSearchFocus, setIsSearchFocus] = useState(false);
+  const [isActionBotSupported, setIsActionBotSupported] = useState(null);
+
+  if (isActionBotSupported === null) {
+    setIsActionBotSupported(getIsActionBotSupported());
+  }
 
   function onSearchTermChange(searchTerm) {
     onSelectSection({ contentType: 'search', searchTerm });
@@ -26,7 +29,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
       <div className={classes['search-input-wrapper']}>
         <SearchInput onFocusChange={setIsSearchFocus} onChange={onSearchTermChange} />
       </div>
-      {actionBotUrl && (
+      {isActionBotSupported && (
         <ActionBotButton
           onSelectSection={onSelectSection}
           onDeselectSection={onDeselectSection}
@@ -42,4 +45,10 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
       <FullScreenButton />
     </section>
   );
+}
+
+function getIsActionBotSupported() {
+  const actionBotUrl = walkme.settings.getPublicPath('actionBot');
+  const actionBotId = Number(walkme.apps.getConfig('actionBotId'));
+  return !!(actionBotUrl && actionBotId && !isNaN(actionBotId));
 }
