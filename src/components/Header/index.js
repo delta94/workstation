@@ -48,7 +48,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
 }
 
 function getIsActionBotSupported() {
-  const actionBotUrl = walkme.settings.getPublicPath('actionBot');
+  const actionBotUrl = walkme.apps.getPublicPath('actionBot');
   const actionBotId = Number(walkme.apps.getConfig('actionBotId'));
   return !!(actionBotUrl && actionBotId && !isNaN(actionBotId));
 }

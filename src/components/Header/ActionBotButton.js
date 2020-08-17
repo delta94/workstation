@@ -13,7 +13,7 @@ export default function ActionBotButton({ onSelectSection, onDeselectSection, ac
   }
 
   useEffect(() => {
-    const isActionBotContentType = !activeSection || activeSection.contentType === 'action-bot';
+    const isActionBotContentType = activeSection && activeSection.contentType === 'action-bot';
     setIsShowingActionBot(isActionBotContentType);
   }, [activeSection]);
 
