@@ -4,23 +4,8 @@ import { TOGGLE_LOCATION, UPDATE_LOCATION, UPDATE_LOCATION_HISTORY } from '../..
 
 import Header from '../Header';
 import TabsBar from '../TabsBar';
-import TabsContent from '../TabsContent';
-import SearchResults from '../SearchResults';
-import NotificationList from '../NotificationList';
-import NoData from '../StateScreens/NoData';
-
 import classes from './styles.module.scss';
-import ActionBotLayout from '../ActionBotLayout';
-
-const contentTypeToComponentDictionary = {
-  help: TabsContent,
-  tasks: TabsContent,
-  notifications: NotificationList,
-  search: ({ location, onDeselectSection }) => (
-    <SearchResults searchTerm={location.searchTerm} onDeselectSection={onDeselectSection} />
-  ),
-  undefined: () => <NoData />,
-};
+import MainLayout from '../MainLayout';
 
 const toggleLocations = ['notifications', 'action-bot'];
 
@@ -33,8 +18,6 @@ function Layout() {
     dispatch,
   } = useContext(WalkmeSDKContext);
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
-  const [wasActionBotLoaded, setActionBotLoaded] = useState(false);
-  const ContentComponent = contentTypeToComponentDictionary[location.contentType];
   const contentSection = useRef(null);
 
   function onSetActiveSection(newActiveSection) {
@@ -69,19 +52,7 @@ function Layout() {
   useEffect(() => {
     contentSection.current.scrollTo(0, 0);
     setTabsAreActive(areTabsActive());
-
-    if (!wasActionBotLoaded && location.contentType === 'action-bot') {
-      setActionBotLoaded(true);
-    }
   }, [location]);
-
-  const ActionBot = (wasActionBotLoaded || location.contentType === 'action-bot') && (
-    <ActionBotLayout
-      className={location.contentType !== 'action-bot' ? 'invisible' : ''}
-      location={location}
-      onDeselectSection={onDeselectActiveSection}
-    />
-  );
 
   return (
     <>
@@ -92,8 +63,7 @@ function Layout() {
       />
       <TabsBar path={location.index} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        {!!ActionBot && ActionBot}
-        {!!ContentComponent && <ContentComponent location={location} onDeselectSection={onDeselectActiveSection} />}
+        <MainLayout onDeselectActiveSection={onDeselectActiveSection} />
       </section>
     </>
   );
