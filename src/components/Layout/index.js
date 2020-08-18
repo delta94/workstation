@@ -1,11 +1,14 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
+
 import { WalkmeSDKContext } from '../../providers/WalkmeSDKProvider';
 import { TOGGLE_LOCATION, UPDATE_LOCATION, UPDATE_LOCATION_HISTORY } from '../../providers/reducer';
 
 import Header from '../Header';
 import TabsBar from '../TabsBar';
+import MutableLayout from '../MutableLayout';
+import ImmutableLayouts from '../ImmutableLayouts';
+
 import classes from './styles.module.scss';
-import MainLayout from '../MainLayout';
 
 const toggleLocations = ['notifications', 'action-bot'];
 
@@ -63,7 +66,8 @@ function Layout() {
       />
       <TabsBar path={location.index} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <MainLayout onDeselectActiveSection={onDeselectActiveSection} />
+        <ImmutableLayouts onDeselectActiveSection={onDeselectActiveSection} />
+        <MutableLayout onDeselectActiveSection={onDeselectActiveSection} />
       </section>
     </>
   );

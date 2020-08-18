@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import cc from 'classcat';
+
 import IconButton from '../IconButton';
-import classes from './styles.module.scss';
+
 import { ReactComponent as ActionBotIcon } from './icons/action-bot.svg';
+import classes from './styles.module.scss';
 
 export default function ActionBotButton({ onSelectSection, onDeselectSection, activeSection }) {
   const [isShowingActionBot, setIsShowingActionBot] = useState(false);

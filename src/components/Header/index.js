@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import walkme from '@walkme/sdk';
 import cc from 'classcat';
 
 import SearchInput from '../SearchInput';
@@ -9,7 +10,6 @@ import HeaderMenuButton from './HeaderMenuButton';
 import classes from './styles.module.scss';
 import NotificationsButton from './NotificationsButton';
 import ActionBotButton from './ActionBotButton';
-import walkme from '@walkme/sdk';
 
 export default function Header({ onSelectSection, onDeselectSection, activeSection }) {
   const [isSearchFocus, setIsSearchFocus] = useState(false);
@@ -18,7 +18,7 @@ export default function Header({ onSelectSection, onDeselectSection, activeSecti
   useEffect(() => {
     const actionBotUrl = walkme.apps.getPublicPath('actionBot');
     const actionBot = walkme.apps.getConfig('actionBot');
-    setShouldShowActionBot(!!(actionBotUrl && actionBot && actionBot.id && !isNaN(actionBot.id)));
+    setShouldShowActionBot(!!(actionBotUrl && actionBot?.id && !isNaN(actionBot.id)));
   }, []);
 
   function onSearchTermChange(searchTerm) {
