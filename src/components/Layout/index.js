@@ -5,22 +5,12 @@ import { TOGGLE_LOCATION, UPDATE_LOCATION, UPDATE_LOCATION_HISTORY } from '../..
 
 import Header from '../Header';
 import TabsBar from '../TabsBar';
-import TabsContent from '../TabsContent';
-import SearchResults from '../SearchResults';
-import NotificationList from '../NotificationList';
-import NoData from '../StateScreens/NoData';
+import MutableLayout from '../MutableLayout';
+import ImmutableLayouts from '../ImmutableLayouts';
 
 import classes from './styles.module.scss';
 
-const contentTypeToComponentDictionary = {
-  help: TabsContent,
-  tasks: TabsContent,
-  notifications: NotificationList,
-  search: ({ location, onDeselectSection }) => (
-    <SearchResults searchTerm={location.searchTerm} onDeselectSection={onDeselectSection} />
-  ),
-  undefined: () => <NoData />,
-};
+const toggleLocations = ['notifications', 'action-bot'];
 
 function Layout() {
   const {
@@ -31,7 +21,6 @@ function Layout() {
     dispatch,
   } = useContext(WalkmeSDKContext);
   const [tabsAreActive, setTabsAreActive] = useState(areTabsActive);
-  const ContentComponent = contentTypeToComponentDictionary[location.contentType];
   const contentSection = useRef(null);
 
   function onSetActiveSection(newActiveSection) {
@@ -41,7 +30,8 @@ function Layout() {
     // This happens when first starting to search (on the first letter input) before the app is in the search section,
     // or for any other section
     if (!changeSearchTerm && newSearchTermIsNotEmpty) {
-      dispatch({ type: UPDATE_LOCATION_HISTORY, location: newActiveSection });
+      const dispatchAction = toggleLocations.includes(location.contentType) ? UPDATE_LOCATION : UPDATE_LOCATION_HISTORY;
+      dispatch({ type: dispatchAction, location: newActiveSection });
     }
 
     // This happens after the app is already in the search section
@@ -76,7 +66,8 @@ function Layout() {
       />
       <TabsBar path={location.index} onSelectSection={onSetActiveSection} isActive={tabsAreActive} />
       <section ref={contentSection} className={classes.content}>
-        <ContentComponent location={location} onDeselectSection={onDeselectActiveSection} />
+        <ImmutableLayouts onDeselectActiveSection={onDeselectActiveSection} />
+        <MutableLayout onDeselectActiveSection={onDeselectActiveSection} />
       </section>
     </>
   );

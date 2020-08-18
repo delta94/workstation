@@ -95,6 +95,31 @@
       top: 0;
     }
   }
+
+  .action-bot-icon {
+    &:not(.is-active):hover::after {
+      top: 0;
+    }
+
+    &.is-active {
+      svg {
+        fill: var(--background);
+        stroke: var(--background);
+      }
+    }
+
+    &:not(.is-active):hover {
+      svg {
+        fill: var(--primary);
+        stroke: var(--primary);
+      }
+    }
+
+    svg {
+      fill: var(--secondary500);
+      stroke: var(--secondary500);
+    }
+  }
 }
 
 .minimize-icon {
