@@ -4,7 +4,7 @@ import walkme from '@walkme/sdk';
 import Loader from '../components/StateScreens/Loader';
 import NoConnection from '../components/StateScreens/NoConnection';
 
-import { AppPropTypes, Platform, WalkmeSdk, WalkmeSdkContextValue } from './types';
+import { AppPropTypes, Platform, WalkmeSdk, WalkmeSdkContextValue, Action } from './types';
 import reducer, {
   HANDLE_BEFORE_CLOSE,
   INIT_LOCATION,
@@ -12,10 +12,10 @@ import reducer, {
   UPDATE_SDK,
   UPDATE_SDK_ERROR,
   UPDATE_SDK_SUCCESS,
+  NOTIFICATIONS_RECEIVED,
 } from './reducer';
 import classes from './styles.module.scss';
-
-const FETCH_RETRY_AMOUNT = 3;
+import { updateNotifications } from '../components/NotificationList/utils';
 
 export const WalkmeSDKContext = createContext<WalkmeSdkContextValue | null>(null);
 
@@ -32,26 +32,7 @@ function getPlatform(): Platform {
   };
 }
 
-async function getNotifications(wmNotifications: any, getNotificationsCount: number = 0): Promise<any> {
-  let count = getNotificationsCount;
-  try {
-    return await wmNotifications.getNotifications();
-  } catch (error) {
-    if (count < FETCH_RETRY_AMOUNT) {
-      count += 1;
-      return await getNotifications(wmNotifications, count);
-    } else {
-      throw new Error('Failed to get notifications ' + error);
-    }
-  }
-}
-
-async function getNotificationsRecursively(wmNotifications: any): Promise<any> {
-  const getNotificationsCount = 0;
-  return getNotifications(wmNotifications, getNotificationsCount);
-}
-
-async function getSdk() {
+async function getSdk(dispatch: (value: Action) => void) {
   const [wmSearch, wmNotifications, uiTreeSDK, languagesSDK] = await Promise.all([
     walkme.apps.getApp('search'),
     walkme.apps.getApp('notifications'),
@@ -59,18 +40,19 @@ async function getSdk() {
     walkme.language.getLanguagesList(),
   ]);
 
-  const notifications = await getNotificationsRecursively(wmNotifications);
+  updateNotifications(wmNotifications, dispatch);
 
   const tabTypes = (walkme.content as any).TabTypes;
 
   return {
     wmSearch,
     wmNotifications,
-    notifications,
+    notifications: [],
     uiTreeSDK,
     tabTypes,
     languagesSDK,
     platform: getPlatform(),
+    isLoadingNotifications: false,
   };
 }
 
@@ -98,7 +80,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
   async function handleBeforeOpen() {
     try {
       dispatch({ type: UPDATE_SDK });
-      const sdk = await getSdk();
+      const sdk = await getSdk(dispatch);
       dispatch({ type: UPDATE_SDK_SUCCESS, sdk });
     } catch (error) {
       dispatch({ type: UPDATE_SDK_ERROR, error });
@@ -120,7 +102,7 @@ export default function WalkmeSDKProvider({ children }: AppPropTypes) {
     (async function init() {
       try {
         dispatch({ type: UPDATE_SDK });
-        const sdk = await getSdk();
+        const sdk = await getSdk(dispatch);
         const location = getInitialLocation(sdk);
         dispatch({ type: INIT_LOCATION, location });
         dispatch({ type: UPDATE_SDK_SUCCESS, sdk });

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import format from 'date-fns/format';
 import cc from 'classcat';
 
@@ -8,13 +8,20 @@ import EmptyNotifications from '../StateScreens/EmptyNotifications';
 
 import { ReactComponent as BellIcon } from './bell.svg';
 import classes from './styles.module.scss';
+import { updateNotifications } from './utils';
+import Loader from '../StateScreens/Loader';
 
 export default function NotificationList() {
   const {
     state: {
-      sdk: { wmNotifications, notifications },
+      sdk: { wmNotifications, notifications, isLoadingNotifications },
     },
+    dispatch,
   } = useContext(WalkmeSDKContext);
+
+  useEffect(() => {
+    updateNotifications(wmNotifications, dispatch);
+  }, []);
 
   function parseDate(date) {
     const parsedDate = new Date(Date.parse(date));
@@ -23,6 +30,8 @@ export default function NotificationList() {
 
   return (
     <>
+      {isLoadingNotifications && <Loader />}
+
       {notifications?.length ? (
         <div className={classes.notifications}>
           <div className={classes['notifications-list-title']}>Newest notifications</div>
