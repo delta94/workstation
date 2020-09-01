@@ -33,6 +33,7 @@ export type WalkmeSdk = {
   wmSearch: object | {};
   wmNotifications: object | {};
   notifications: Array<object> | {};
+  isLoadingNotifications: boolean;
   uiTreeSDK: Array<object> | {};
   tabTypes: object | {};
   languagesSDK: object | {};
@@ -44,7 +45,7 @@ export type AppState = {
   ui: Ui;
 };
 
-export type Action = { type: string; sdk?: WalkmeSdk; location?: Location; error?: string };
+export type Action = { type: string; sdk?: WalkmeSdk; location?: Location; error?: string; notifications?: Array<any> };
 
 export type WalkmeSdkContextValue = {
   state: AppState;

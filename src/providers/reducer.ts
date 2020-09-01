@@ -10,12 +10,15 @@ export const UPDATE_LOCATION_HISTORY = 'updateLocationHistory';
 export const UPDATE_LOCATION = 'updateLocation';
 export const TOGGLE_LOCATION = 'toggleLocation';
 export const HANDLE_BEFORE_CLOSE = 'handleBeforeClose';
+export const NOTIFICATIONS_RECEIVED = 'notificationsReceived';
+export const LOADING_NOTIFICATIONS = 'loadingNotifications';
 
 export const initialState: AppState = {
   sdk: {
     wmSearch: {},
     wmNotifications: {},
-    notifications: {},
+    notifications: [],
+    isLoadingNotifications: false,
     uiTreeSDK: {},
     tabTypes: {},
     languagesSDK: {},
@@ -51,6 +54,24 @@ export default function reducer(state: AppState, action: Action): AppState {
       };
     case HANDLE_BEFORE_CLOSE:
       return { ...draft, ui: { ...draft.ui, loading: true, error: false } };
+
+    case LOADING_NOTIFICATIONS:
+      return {
+        ...draft,
+        sdk: {
+          ...draft.sdk,
+          isLoadingNotifications: true,
+        },
+      };
+    case NOTIFICATIONS_RECEIVED:
+      return {
+        ...draft,
+        sdk: {
+          ...draft.sdk,
+          isLoadingNotifications: false,
+          notifications: action.notifications ?? [],
+        },
+      };
     default:
       return state;
   }
