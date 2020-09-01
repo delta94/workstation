@@ -126,6 +126,9 @@ const sdk = {
         },
       },
     },
+    getNotifications() {
+      return this.notifications;
+    },
   },
   notifications: [
     {
@@ -639,6 +642,7 @@ const sdkProvider = {
       error: false,
     },
   },
+  dispatch: () => {},
 };
 
 export { sdkProvider };
